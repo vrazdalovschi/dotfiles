@@ -1,9 +1,11 @@
 [user]
     name = Vasile Razdalovschi
+    email = vasile.razdalovschi@gmail.com
 
 [core]
     pager = delta
     editor = zed --wait
+    excludesfile = ~/.gitignore_global
 
 [interactive]
     diffFilter = delta --color-only

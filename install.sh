@@ -56,6 +56,7 @@ link_file "$DOTFILES_DIR/zsh/.zshrc" ~/.zshrc
 echo ""
 echo "==> Linking git config..."
 link_file "$DOTFILES_DIR/git/.gitconfig" ~/.gitconfig
+link_file "$DOTFILES_DIR/git/.gitignore_global" ~/.gitignore_global
 
 echo ""
 echo "==> Linking Ghostty config..."

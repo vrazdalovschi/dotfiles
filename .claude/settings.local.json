@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(/bin/bash:*)",
+      "Bash(brew services:*)",
+      "Bash(mdfind:*)",
+      "Bash(dscl:*)",
+      "Bash(docker system:*)",
+      "Bash(du:*)",
+      "Bash(docker images:*)",
+      "Bash(file:*)",
+      "Bash(brew list:*)",
+      "Bash(ls:*)",
+      "Bash(find:*)",
+      "WebFetch(domain:github.com)",
+      "Bash(git config:*)"
+    ]
+  }
+}
