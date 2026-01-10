@@ -8,7 +8,7 @@ Personal configuration files for macOS development environment.
 |-----------|-------------|
 | **zsh** | Shell config with starship prompt, modern CLI tools (eza, bat, zoxide, atuin, fzf) |
 | **git** | Git config with delta pager, Zed editor |
-| **mise** | Runtime version manager config (node, python, go, terraform, gcloud) |
+| **mise** | Runtime version manager config (node, python, go, terraform) |
 | **zed** | Zed editor settings |
 | **claude** | Claude Code settings, custom skills, statusline, and commands |
 | **ghostty** | Terminal emulator configuration |
@@ -57,7 +57,7 @@ dotfiles/
 ├── git/
 │   └── .gitconfig       # Git config (delta, zed editor)
 ├── mise/
-│   └── config.toml      # Runtime versions (node, python, go, terraform, gcloud)
+│   └── config.toml      # Runtime versions (node, python, go, terraform)
 ├── zed/
 │   └── settings.json    # Zed editor config
 ├── claude/
@@ -78,6 +78,7 @@ dotfiles/
 |-----------|-------------|
 | `zsh/.zshrc` | `~/.zshrc` |
 | `git/.gitconfig` | `~/.gitconfig` |
+| `git/.gitignore_global` | `~/.gitignore_global` |
 | `mise/config.toml` | `~/.config/mise/config.toml` |
 | `zed/settings.json` | `~/.config/zed/settings.json` |
 | `ghostty/config` | `~/.config/ghostty/config` |
@@ -213,6 +214,7 @@ youtube lofi beats        # Opens browser with YouTube search
 ### DevOps & Kubernetes
 | App | Description | Managed By |
 |-----|-------------|------------|
+| [Google Cloud SDK](https://cloud.google.com/sdk) | GCP CLI (gcloud, gsutil, gke-gcloud-auth-plugin) | Homebrew |
 | [Lens](https://k8slens.dev/) | Kubernetes IDE | Homebrew |
 | k3d, kustomize, stern, kubefwd | K8s CLI tools | Homebrew |
 | [Terraform](https://terraform.io/), tflint, terramate | Infrastructure as code | mise / Homebrew |
@@ -269,7 +271,6 @@ youtube lofi beats        # Opens browser with YouTube search
 | python | Python runtime |
 | go | Go runtime |
 | terraform | Infrastructure as code |
-| gcloud | Google Cloud SDK |
 | pnpm, uv, bun | Package managers |
 | helm, k9s, hadolint, shellcheck, lefthook | DevOps tools |
 
@@ -291,7 +292,6 @@ Manages versions for:
 - **python** - Python runtime
 - **go** - Go runtime
 - **terraform** - Infrastructure as code
-- **gcloud** - Google Cloud SDK
 - **pnpm** - Fast package manager
 - **uv** - Fast Python package installer
 

@@ -13,7 +13,9 @@
       "Bash(ls:*)",
       "Bash(find:*)",
       "WebFetch(domain:github.com)",
-      "Bash(git config:*)"
+      "Bash(git config:*)",
+      "Bash(brew info:*)",
+      "Bash(delta:*)"
     ]
   }
 }
