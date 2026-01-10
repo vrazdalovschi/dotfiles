@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "statusLine": {
+    "type": "command",
+    "command": "bash ~/.claude/statusline-command.sh"
+  },
+  "enabledPlugins": {
+    "dev-browser@dev-browser-marketplace": false
+  },
+  "alwaysThinkingEnabled": true,
+  "promptSuggestionEnabled": false,
+  "feedbackSurveyState": {
+    "lastShownTime": 1754258738112
+  }
+}

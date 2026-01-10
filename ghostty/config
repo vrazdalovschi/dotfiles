@@ -1,0 +1,38 @@
+theme = Dracula
+
+# Update this line to the exact name found in step 2
+font-family = "JetBrainsMono Nerd Font"
+
+# Keep these for the cool symbols
+font-feature = calt
+font-feature = liga
+
+# --- Aesthetics ---
+# Give the text some breathing room (looks much better)
+window-padding-x = 12
+window-padding-y = 12
+
+# Blur the background slightly (native macOS feel)
+background-opacity = 0.96
+background-blur-radius = 20
+
+# --- Cursor ---
+# Make it feel alive
+cursor-style = block
+cursor-style-blink = true
+
+# --- macOS Native Text Editing ---
+# Map Option+Delete to send Ctrl+W (Delete Word)
+# \x17 is the hex code for Ctrl+W
+keybind = alt+backspace=text:\x17
+
+# Map Cmd+Delete to send Ctrl+U (Delete Line)
+# \x15 is the hex code for Ctrl+U
+keybind = cmd+backspace=text:\x15
+
+# --- Open Scrollback in Zed ---
+# Step 1: Write scrollback to temp file and paste path
+keybind = cmd+shift+j=write_scrollback_file:paste
+
+# Step 2: Prepend 'zed ' and execute (press after cmd+shift+j)
+keybind = cmd+alt+shift+j=text:zed \x1b[H\n

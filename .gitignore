@@ -1,0 +1,14 @@
+.DS_Store
+*.backup
+
+# Secrets and credentials
+.env
+.env.*
+*.secret
+*.key
+*.pem
+credentials.json
+
+# Local overrides
+*.local
+CLAUDE.local.md

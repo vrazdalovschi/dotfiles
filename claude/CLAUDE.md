@@ -1,0 +1,1 @@
+- Write lowercase commit titles (max 50 characters)
