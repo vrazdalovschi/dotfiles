@@ -74,7 +74,42 @@ alias lg="lazygit"
 # Kubernetes
 alias kdiff='kubectl diff -f - | delta --paging=never'
 
-# --- 5. Functions ---
+# --- 5. Startup Checks ---
+
+# Check for bun global package updates (once per day)
+_check_bun_updates() {
+  local global_dir="$HOME/.bun/install/global"
+  local cache_file="$HOME/.cache/bun-update-check"
+
+  [[ -f "$global_dir/package.json" ]] || return
+
+  # Only check once per day
+  if [[ -f "$cache_file" ]]; then
+    local last_check=$(cat "$cache_file")
+    local today=$(date +%Y-%m-%d)
+    [[ "$last_check" == "$today" ]] && return
+  fi
+
+  mkdir -p "$HOME/.cache"
+  date +%Y-%m-%d > "$cache_file"
+
+  local outdated
+  outdated=$(cd "$global_dir" && bun outdated 2>/dev/null | grep -v "^$")
+
+  if [[ -n "$outdated" ]]; then
+    echo "\n📦 Bun global package updates available:"
+    echo "$outdated"
+    echo ""
+    read -q "reply?Update now? [y/N] "
+    echo ""
+    if [[ "$reply" =~ ^[Yy]$ ]]; then
+      (cd "$global_dir" && bun update)
+    fi
+  fi
+}
+_check_bun_updates
+
+# --- 6. Functions ---
 
 # Google search in default browser
 google() {

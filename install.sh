@@ -11,6 +11,7 @@ mkdir -p ~/.claude/commands
 mkdir -p ~/.config/ghostty
 mkdir -p ~/.config/mise
 mkdir -p ~/.config/zed
+mkdir -p ~/.bun/install/global
 
 # Function to create symlink with backup
 link_file() {
@@ -85,6 +86,18 @@ if command -v mise &> /dev/null; then
     mise install
 else
     echo "mise not installed yet. Run 'mise install' after brew completes."
+fi
+
+echo ""
+echo "==> Linking bun global packages..."
+link_file "$DOTFILES_DIR/bun/package.json" ~/.bun/install/global/package.json
+
+echo ""
+echo "==> Installing bun global packages..."
+if command -v bun &> /dev/null; then
+    (cd ~/.bun/install/global && bun install)
+else
+    echo "bun not installed yet. Run 'cd ~/.bun/install/global && bun install' after mise completes."
 fi
 
 echo ""

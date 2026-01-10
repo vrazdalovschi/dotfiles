@@ -13,6 +13,7 @@ Personal configuration files for macOS development environment.
 | **claude** | Claude Code settings, custom skills, statusline, and commands |
 | **ghostty** | Terminal emulator configuration |
 | **brew** | All Homebrew packages (Brewfile) |
+| **bun** | Global bun packages (package.json) |
 
 ## Quick Start
 
@@ -54,6 +55,8 @@ dotfiles/
 ├── install.sh           # Setup script
 ├── brew/
 │   └── Brewfile         # Homebrew packages
+├── bun/
+│   └── package.json     # Global bun packages
 ├── git/
 │   └── .gitconfig       # Git config (delta, zed editor)
 ├── mise/
@@ -83,6 +86,7 @@ dotfiles/
 | `zed/settings.json` | `~/.config/zed/settings.json` |
 | `ghostty/config` | `~/.config/ghostty/config` |
 | `claude/*` | `~/.claude/*` |
+| `bun/package.json` | `~/.bun/install/global/package.json` |
 
 ## Daily Workflow
 
@@ -99,13 +103,43 @@ cd ~/dotfiles
 git add -A && git commit -m "update zshrc" && git push
 ```
 
-## Updating Brew Packages
+## Updating Packages
+
+### Homebrew
 
 When you install new packages, update the Brewfile:
 
 ```bash
 brew bundle dump --file=~/dotfiles/brew/Brewfile --force
 cd ~/dotfiles && git add -A && git commit -m "update brewfile" && git push
+```
+
+### Bun Global Packages
+
+Bun global packages are tracked automatically via symlink to `bun/package.json`.
+
+**Auto-update prompt:** Once per day, the first terminal checks for updates and prompts:
+```
+📦 Bun global package updates available:
+┌───────────────────────────┬─────────┬────────┐
+│ package                   │ current │ latest │
+├───────────────────────────┼─────────┼────────┤
+│ @anthropic-ai/claude-code │ 1.0.0   │ 2.0.0  │
+└───────────────────────────┴─────────┴────────┘
+
+Update now? [y/N]
+```
+
+**Manual commands:**
+```bash
+# Force update check now
+rm ~/.cache/bun-update-check && exec zsh
+
+# Update all global packages
+(cd ~/.bun/install/global && bun update)
+
+# Install new global package (auto-tracked in repo)
+bun install -g <package>
 ```
 
 ## Adding New Configs
@@ -248,6 +282,14 @@ youtube lofi beats        # Opens browser with YouTube search
 | App | Description | Managed By |
 |-----|-------------|------------|
 | [Superwhisper](https://superwhisper.com/) | Local AI voice-to-text | Manual |
+
+### AI Coding Assistants (bun global)
+| Tool | Description | Managed By |
+|------|-------------|------------|
+| [Claude Code](https://docs.anthropic.com/en/docs/claude-code) | Anthropic's CLI for Claude | bun |
+| [Gemini CLI](https://github.com/anthropics/gemini-cli) | Google's Gemini CLI | bun |
+| [Codex](https://github.com/openai/codex) | OpenAI's coding agent | bun |
+| [Shopify CLI](https://shopify.dev/docs/api/shopify-cli) | Shopify development CLI | bun |
 
 ### CLI Tools (Homebrew)
 

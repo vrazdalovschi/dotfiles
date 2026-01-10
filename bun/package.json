@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "@anthropic-ai/claude-code": "latest",
+    "@google/gemini-cli": "latest",
+    "@openai/codex": "latest",
+    "@shopify/cli": "latest"
+  }
+}
