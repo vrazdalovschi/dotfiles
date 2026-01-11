@@ -1,1 +1,2 @@
 - Write lowercase commit titles (max 50 characters)
+- Always launch opus subagents unless specified otherwise
