@@ -18,7 +18,8 @@
       "Bash(delta:*)",
       "WebFetch(domain:context7.com)",
       "Skill(writing-skills)",
-      "WebFetch(domain:orm.drizzle.team)"
+      "WebFetch(domain:orm.drizzle.team)",
+      "WebFetch(domain:developers.openai.com)"
     ]
   }
 }

@@ -71,6 +71,8 @@ dotfiles/
 │   └── commands/        # Custom commands
 ├── ghostty/
 │   └── config
+├── docs/
+│   └── port-management.md  # Reference docs
 └── zsh/
     └── .zshrc
 ```
@@ -343,3 +345,9 @@ See [mise.jdx.dev](https://mise.jdx.dev) for docs.
 - Custom skills for PostgreSQL, SQLMesh, planning workflows
 - Statusline showing git/project info
 - Global instructions in CLAUDE.md
+
+## Reference Docs
+
+| Doc | Description |
+|-----|-------------|
+| [Port Management](docs/port-management.md) | Solving port conflicts in parallel development |
