@@ -12,6 +12,20 @@ mkdir -p ~/.config/ghostty
 mkdir -p ~/.config/mise
 mkdir -p ~/.config/zed
 mkdir -p ~/.bun/install/global
+mkdir -p ~/agents/logs/errors
+mkdir -p ~/agents/logs/successes
+
+# Initialize agents logs metadata if not exists
+if [ ! -f ~/agents/logs/metadata.json ]; then
+    cat > ~/agents/logs/metadata.json << 'EOF'
+{
+  "lastErrorId": 0,
+  "lastSuccessId": 0,
+  "description": "Tracks ID counters for error and success logs"
+}
+EOF
+    echo "Created ~/agents/logs/metadata.json"
+fi
 
 # Function to create symlink with backup
 link_file() {
