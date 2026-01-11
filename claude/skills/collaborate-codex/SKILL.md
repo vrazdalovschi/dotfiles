@@ -1,12 +1,14 @@
 ---
-name: codex
+name: collaborate-codex
 description: Use when the user asks to run Codex CLI (codex exec, codex resume) or references OpenAI Codex for code analysis, refactoring, or automated editing
 ---
 
 # Codex Skill Guide
 
+Orchestrate OpenAI Codex CLI for code analysis, refactoring, and automated editing tasks.
+
 ## Running a Task
-1. Ask the user (via `AskUserQuestion`) which model to run (`gpt-5.2-codex` or `gpt-5.2`) AND which reasoning effort to use (`xhigh`, high`, `medium`, or `low`) in a **single prompt with two questions**.
+1. Ask the user (via `AskUserQuestion`) which model to run (`gpt-5.2-codex` or `gpt-5.2`) AND which reasoning effort to use (`xhigh`, `high`, `medium`, or `low`) in a **single prompt with two questions**.
 2. Select the sandbox mode required for the task; default to `--sandbox read-only` unless edits or network access are necessary.
 3. Assemble the command with the appropriate options:
    - `-m, --model <MODEL>`
@@ -15,7 +17,6 @@ description: Use when the user asks to run Codex CLI (codex exec, codex resume) 
    - `--full-auto`
    - `-C, --cd <DIR>`
    - `--skip-git-repo-check`
-3. Always use --skip-git-repo-check.
 4. When continuing a previous session, use `codex exec --skip-git-repo-check resume --last` via stdin. When resuming don't use any configuration flags unless explicitly requested by the user e.g. if he species the model or the reasoning effort when requesting to resume a session. Resume syntax: `echo "your prompt here" | codex exec --skip-git-repo-check resume --last 2>/dev/null`. All flags have to be inserted between exec and resume.
 5. **IMPORTANT**: By default, append `2>/dev/null` to all `codex exec` commands to suppress thinking tokens (stderr). Only show stderr if the user explicitly requests to see thinking tokens or if debugging is needed.
 6. Run the command, capture stdout/stderr (filtered as appropriate), and summarize the outcome for the user.
@@ -27,7 +28,7 @@ description: Use when the user asks to run Codex CLI (codex exec, codex resume) 
 | Read-only review or analysis | `read-only` | `--sandbox read-only 2>/dev/null` |
 | Apply local edits | `workspace-write` | `--sandbox workspace-write --full-auto 2>/dev/null` |
 | Permit network or broad access | `danger-full-access` | `--sandbox danger-full-access --full-auto 2>/dev/null` |
-| Resume recent session | Inherited from original | `echo "prompt" \| codex exec --skip-git-repo-check resume --last 2>/dev/null` (no flags allowed) |
+| Resume recent session | Inherited from original | `echo "prompt" \| codex exec --skip-git-repo-check resume --last 2>/dev/null` (flags go between exec and resume if needed) |
 | Run from another directory | Match task needs | `-C <DIR>` plus other flags `2>/dev/null` |
 
 ## Following Up

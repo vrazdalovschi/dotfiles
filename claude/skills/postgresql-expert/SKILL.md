@@ -1,6 +1,6 @@
 ---
 name: postgresql-expert
-description: PostgreSQL 18 expert for validating SQL queries, analyzing schemas, detecting dangerous operations, and providing performance/security recommendations. Use when editing .sql files, reviewing SQL in Python/JavaScript/TypeScript code, writing database queries, or when user mentions PostgreSQL, SQL validation, query optimization, or database schema.
+description: Use when editing .sql files, reviewing SQL in Python/JavaScript/TypeScript code, writing database queries, or when user mentions PostgreSQL, SQL validation, query optimization, or database schema.
 ---
 
 # PostgreSQL 18 Expert

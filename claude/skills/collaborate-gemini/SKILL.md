@@ -1,9 +1,9 @@
 ---
-name: gemini-tmux-orchestration
-description: Use when delegating coding tasks to Gemini CLI agent, when you need parallel AI execution, or when tasks benefit from Gemini's 1M+ context window - orchestrates Gemini via tmux since headless mode cannot write files
+name: collaborate-gemini
+description: Use when delegating coding tasks to Gemini CLI agent, when you need parallel AI execution, or when tasks benefit from Gemini's 1M+ context window.
 ---
 
-# Gemini CLI Orchestration via tmux
+# Collaborate with Gemini CLI
 
 ## Overview
 
@@ -75,15 +75,15 @@ tmux capture-pane -t {right} -p -S -200 | tail -100
 
 | Mistake | Fix |
 |---------|-----|
-| `send-keys 'text' Enter` in one call | Enter не регистрируется — отправлять отдельно |
-| Chaining: `send-keys && sleep && capture` | Команды утекают в ввод Gemini — separate bash calls |
-| Fixed `sleep 60` | Используй polling с маркерами |
-| Ignoring loop detection | Gemini зависает — детектить и отправлять `2` |
-| Long prompts | Создай `.gemini/commands/task.toml` |
+| `send-keys 'text' Enter` in one call | Enter doesn't register - send separately |
+| Chaining: `send-keys && sleep && capture` | Commands leak into Gemini input - use separate bash calls |
+| Fixed `sleep 60` | Use polling with status markers instead |
+| Ignoring loop detection | Gemini hangs - detect and send `2` |
+| Long prompts | Create `.gemini/commands/task.toml` |
 
 ## Custom Commands
 
-Для повторяющихся задач создай `.gemini/commands/`:
+For repeating tasks, create `.gemini/commands/`:
 
 ```toml
 # .gemini/commands/improve-design.toml
@@ -94,7 +94,7 @@ description = "Improve app design"
 prompt = "Improve design: gradients, shadows, animations. Run build when done."
 ```
 
-Вызов: `tmux send-keys -t {right} '/improve-design'` + Enter
+Call: `tmux send-keys -t {right} '/improve-design'` + Enter
 
 ## When NOT to Use
 

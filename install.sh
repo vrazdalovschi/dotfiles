@@ -6,8 +6,6 @@ DOTFILES_DIR="$(cd "$(dirname "$0")" && pwd)"
 echo "Installing dotfiles from $DOTFILES_DIR"
 
 # Create necessary directories
-mkdir -p ~/.claude/skills
-mkdir -p ~/.claude/commands
 mkdir -p ~/.config/ghostty
 mkdir -p ~/.config/mise
 mkdir -p ~/.config/zed
@@ -27,8 +25,8 @@ EOF
     echo "Created ~/agents/logs/metadata.json"
 fi
 
-# Function to create symlink with backup
-link_file() {
+# Create symlink (works for files and directories)
+link() {
     local src="$1"
     local dest="$2"
 
@@ -43,47 +41,34 @@ link_file() {
     echo "Linked $src -> $dest"
 }
 
-# Function to link directory contents
-link_dir_contents() {
-    local src_dir="$1"
-    local dest_dir="$2"
-
-    for item in "$src_dir"/*; do
-        if [ -e "$item" ]; then
-            local name=$(basename "$item")
-            link_file "$item" "$dest_dir/$name"
-        fi
-    done
-}
-
 echo ""
 echo "==> Linking Claude Code configs..."
-link_file "$DOTFILES_DIR/claude/CLAUDE.md" ~/.claude/CLAUDE.md
-link_file "$DOTFILES_DIR/claude/settings.json" ~/.claude/settings.json
-link_file "$DOTFILES_DIR/claude/statusline-command.sh" ~/.claude/statusline-command.sh
-link_dir_contents "$DOTFILES_DIR/claude/skills" ~/.claude/skills
-link_dir_contents "$DOTFILES_DIR/claude/commands" ~/.claude/commands
+link "$DOTFILES_DIR/claude/CLAUDE.md" ~/.claude/CLAUDE.md
+link "$DOTFILES_DIR/claude/settings.json" ~/.claude/settings.json
+link "$DOTFILES_DIR/claude/statusline-command.sh" ~/.claude/statusline-command.sh
+link "$DOTFILES_DIR/claude/skills" ~/.claude/skills
+link "$DOTFILES_DIR/claude/commands" ~/.claude/commands
 
 echo ""
 echo "==> Linking zsh config..."
-link_file "$DOTFILES_DIR/zsh/.zshrc" ~/.zshrc
+link "$DOTFILES_DIR/zsh/.zshrc" ~/.zshrc
 
 echo ""
 echo "==> Linking git config..."
-link_file "$DOTFILES_DIR/git/.gitconfig" ~/.gitconfig
-link_file "$DOTFILES_DIR/git/.gitignore_global" ~/.gitignore_global
+link "$DOTFILES_DIR/git/.gitconfig" ~/.gitconfig
+link "$DOTFILES_DIR/git/.gitignore_global" ~/.gitignore_global
 
 echo ""
 echo "==> Linking Ghostty config..."
-link_file "$DOTFILES_DIR/ghostty/config" ~/.config/ghostty/config
+link "$DOTFILES_DIR/ghostty/config" ~/.config/ghostty/config
 
 echo ""
 echo "==> Linking mise config..."
-link_file "$DOTFILES_DIR/mise/config.toml" ~/.config/mise/config.toml
+link "$DOTFILES_DIR/mise/config.toml" ~/.config/mise/config.toml
 
 echo ""
 echo "==> Linking Zed config..."
-link_file "$DOTFILES_DIR/zed/settings.json" ~/.config/zed/settings.json
+link "$DOTFILES_DIR/zed/settings.json" ~/.config/zed/settings.json
 
 echo ""
 echo "==> Installing Homebrew packages..."
@@ -104,7 +89,7 @@ fi
 
 echo ""
 echo "==> Linking bun global packages..."
-link_file "$DOTFILES_DIR/bun/package.json" ~/.bun/install/global/package.json
+link "$DOTFILES_DIR/bun/package.json" ~/.bun/install/global/package.json
 
 echo ""
 echo "==> Installing bun global packages..."

@@ -1,11 +1,6 @@
 ---
 name: sqlmesh-expert
-description: Expert-level SQLMesh skill for reviewing, validating, implementing, and deploying SQLMesh projects. Covers architectural concepts, model development, incremental strategies, plan review, audits/tests, table diffs, and safe deployment workflows.
-compatibility: Requires a SQLMesh project (config.yaml/config.py + models/). Best with agents that can read files and run shell commands. Warehouse connectivity recommended for full validation.
-metadata:
-  author: psykhe
-  version: "1.0"
-  scope: "SQLMesh project validation + implementation + change review + safe deployment"
+description: Use when working with SQLMesh projects - creating models, reviewing plans, validating changes, debugging failures, or deploying to production environments.
 ---
 
 # SQLMesh Expert Skill
