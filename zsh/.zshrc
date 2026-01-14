@@ -73,6 +73,7 @@ alias lg="lazygit"
 
 # Kubernetes
 alias kdiff='kubectl diff -f - | delta --paging=never'
+alias kapply='kubectl apply -f -'
 
 # --- 5. Startup Checks ---
 
