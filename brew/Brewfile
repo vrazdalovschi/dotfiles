@@ -45,7 +45,7 @@ brew "k3d"
 brew "k6"
 brew "kustomize"
 brew "libomp", link: true
-brew "libpq"
+brew "postgresql@18", link: true
 brew "libssh"
 brew "mise"
 brew "nmap"
