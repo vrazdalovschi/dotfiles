@@ -45,7 +45,7 @@ fi
 # Calculate context percentage with color gradient
 context_info=""
 if [ "$usage" != "null" ]; then
-    current=$(echo "$usage" | jq '(.input_tokens // 0) + (.cache_creation_input_tokens // 0) + (.cache_read_input_tokens // 0)')
+    current=$(echo "$usage" | jq '(.input_tokens // 0) + (.output_tokens // 0) + (.cache_creation_input_tokens // 0) + (.cache_read_input_tokens // 0)')
     size=$(echo "$input" | jq '.context_window.context_window_size')
     if [ "$size" != "null" ] && [ "$size" != "0" ]; then
         pct=$((current * 100 / size))

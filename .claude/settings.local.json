@@ -19,7 +19,16 @@
       "WebFetch(domain:context7.com)",
       "Skill(writing-skills)",
       "WebFetch(domain:orm.drizzle.team)",
-      "WebFetch(domain:developers.openai.com)"
+      "WebFetch(domain:developers.openai.com)",
+      "WebFetch(domain:clawdhub.com)",
+      "Bash(mise upgrade:*)",
+      "Bash(mise plugins:*)",
+      "Bash(mise install:*)",
+      "Bash(brew search:*)",
+      "Bash(brew bundle check:*)",
+      "Bash(brew bundle:*)",
+      "Bash(brew upgrade:*)",
+      "Bash(brew reinstall:*)"
     ]
   }
 }
