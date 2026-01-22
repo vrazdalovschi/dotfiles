@@ -290,10 +290,10 @@ youtube lofi beats        # Opens browser with YouTube search
 |-----|-------------|------------|
 | [Superwhisper](https://superwhisper.com/) | Local AI voice-to-text | Manual |
 
-### AI Coding Assistants (bun global)
+### AI Coding Assistants
 | Tool | Description | Managed By |
 |------|-------------|------------|
-| [Claude Code](https://docs.anthropic.com/en/docs/claude-code) | Anthropic's CLI for Claude | bun |
+| [Claude Code](https://docs.anthropic.com/en/docs/claude-code) | Anthropic's CLI for Claude | native |
 | [Gemini CLI](https://github.com/anthropics/gemini-cli) | Google's Gemini CLI | bun |
 | [Codex](https://github.com/openai/codex) | OpenAI's coding agent | bun |
 | [Shopify CLI](https://shopify.dev/docs/api/shopify-cli) | Shopify development CLI | bun |

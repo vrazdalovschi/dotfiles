@@ -88,6 +88,15 @@ else
 fi
 
 echo ""
+echo "==> Installing Claude Code (native)..."
+if command -v claude &> /dev/null; then
+    echo "Claude Code already installed, checking for updates..."
+    claude update 2>/dev/null || true
+else
+    curl -fsSL https://claude.ai/install.sh | bash
+fi
+
+echo ""
 echo "==> Linking bun global packages..."
 link "$DOTFILES_DIR/bun/package.json" ~/.bun/install/global/package.json
 
