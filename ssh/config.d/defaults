@@ -1,0 +1,6 @@
+# Shared SSH defaults for macOS
+# Machine-specific Host entries go in ~/.ssh/config
+
+Host *
+    AddKeysToAgent yes
+    UseKeychain yes

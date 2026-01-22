@@ -100,4 +100,25 @@ else
 fi
 
 echo ""
+echo "==> Configuring SSH..."
+mkdir -p ~/.ssh
+chmod 700 ~/.ssh
+
+SSH_INCLUDE="Include $DOTFILES_DIR/ssh/config.d/*"
+if [ ! -f ~/.ssh/config ]; then
+    echo "$SSH_INCLUDE" > ~/.ssh/config
+    echo "" >> ~/.ssh/config
+    chmod 600 ~/.ssh/config
+    echo "Created ~/.ssh/config with Include directive"
+elif ! grep -qF "$SSH_INCLUDE" ~/.ssh/config; then
+    # Prepend Include directive to existing config
+    echo "$SSH_INCLUDE" | cat - ~/.ssh/config > ~/.ssh/config.tmp
+    mv ~/.ssh/config.tmp ~/.ssh/config
+    chmod 600 ~/.ssh/config
+    echo "Added Include directive to ~/.ssh/config"
+else
+    echo "SSH config already includes dotfiles"
+fi
+
+echo ""
 echo "Done! Restart your terminal for changes to take effect."

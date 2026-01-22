@@ -14,6 +14,7 @@ Personal configuration files for macOS development environment.
 | **ghostty** | Terminal emulator configuration |
 | **brew** | All Homebrew packages (Brewfile) |
 | **bun** | Global bun packages (package.json) |
+| **ssh** | SSH defaults (AddKeysToAgent, UseKeychain) |
 
 ## Quick Start
 
@@ -71,6 +72,9 @@ dotfiles/
 │   └── commands/        # Custom commands
 ├── ghostty/
 │   └── config
+├── ssh/
+│   └── config.d/
+│       └── defaults         # AddKeysToAgent, UseKeychain
 ├── docs/
 │   └── port-management.md  # Reference docs
 └── zsh/
@@ -89,6 +93,7 @@ dotfiles/
 | `ghostty/config` | `~/.config/ghostty/config` |
 | `claude/*` | `~/.claude/*` |
 | `bun/package.json` | `~/.bun/install/global/package.json` |
+| `ssh/config.d/*` | Included via `~/.ssh/config` (not symlinked) |
 
 ## Daily Workflow
 
