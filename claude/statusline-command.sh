@@ -15,7 +15,6 @@ input=$(cat)
 # Extract data from JSON
 cwd=$(echo "$input" | jq -r '.workspace.current_dir')
 model=$(echo "$input" | jq -r '.model.display_name')
-usage=$(echo "$input" | jq '.context_window.current_usage')
 
 # Git branch and repository path
 if git -C "$cwd" rev-parse --git-dir > /dev/null 2>&1; then
@@ -44,18 +43,14 @@ fi
 
 # Calculate context percentage with color gradient
 context_info=""
-if [ "$usage" != "null" ]; then
-    current=$(echo "$usage" | jq '(.input_tokens // 0) + (.output_tokens // 0) + (.cache_creation_input_tokens // 0) + (.cache_read_input_tokens // 0)')
-    size=$(echo "$input" | jq '.context_window.context_window_size')
-    if [ "$size" != "null" ] && [ "$size" != "0" ]; then
-        pct=$((current * 100 / size))
-        if [ "$pct" -lt 30 ]; then
-            context_info=$(printf "${GREEN}%d%%${RESET}" "$pct")
-        elif [ "$pct" -lt 60 ]; then
-            context_info=$(printf "${YELLOW}%d%%${RESET}" "$pct")
-        else
-            context_info=$(printf "${RED}%d%%${RESET}" "$pct")
-        fi
+pct=$(echo "$input" | jq -r '.context_window.used_percentage // 0' | cut -d. -f1)
+if [ -n "$pct" ] && [ "$pct" != "null" ]; then
+    if [ "$pct" -lt 30 ]; then
+        context_info=$(printf "${GREEN}%d%%${RESET}" "$pct")
+    elif [ "$pct" -lt 60 ]; then
+        context_info=$(printf "${YELLOW}%d%%${RESET}" "$pct")
+    else
+        context_info=$(printf "${RED}%d%%${RESET}" "$pct")
     fi
 fi
 
