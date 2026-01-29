@@ -17,13 +17,22 @@ Get validation, analysis, or research feedback from Gemini and Codex before Clau
 - Confirm understanding of requirements
 - Aggregate opinions on trade-offs
 
+## Model Requirements
+
+**CRITICAL:** Always use top-tier models. Never use smaller/cheaper models.
+
+| CLI | Model Flag | Required Model |
+|-----|------------|----------------|
+| Codex | `-m gpt-5.2` | gpt-5.2 (never o4-mini, gpt-4o, etc.) |
+| Gemini | `-m gemini-3-pro` | gemini-3-pro (never smaller models) |
+
 ## Quick Reference
 
 | Task Type | Gemini Mode | Codex Mode |
 |-----------|-------------|------------|
-| Analyze code/files only | `gemini -p "..."` | `--sandbox read-only` |
-| Research with web access | `gemini -p "..."` (has web search) | `--sandbox danger-full-access` |
-| Deep repo analysis | tmux interactive | `--sandbox read-only` |
+| Analyze code/files only | `gemini -m gemini-3-pro "..."` | `-m gpt-5.2 --sandbox read-only` |
+| Research with web access | `gemini -m gemini-3-pro "..."` (has web search) | `-m gpt-5.2 --sandbox danger-full-access` |
+| Deep repo analysis | tmux interactive | `-m gpt-5.2 --sandbox read-only` |
 
 ## Workflow
 
@@ -41,17 +50,17 @@ Run both agents simultaneously for faster feedback:
 
 ```bash
 # Terminal 1: Gemini
-gemini -p "Analyze this approach: [context]. What are the trade-offs?" 2>/dev/null
+gemini -m gemini-3-pro "Analyze this approach: [context]. What are the trade-offs?" 2>/dev/null
 
 # Terminal 2: Codex
 echo "Analyze this approach: [context]. What are the trade-offs?" | \
-  codex exec --sandbox read-only --skip-git-repo-check -m gpt-5.2 2>/dev/null
+  codex exec -m gpt-5.2 --sandbox read-only --skip-git-repo-check 2>/dev/null
 ```
 
 Or use background jobs:
 ```bash
-gemini -p "..." > /tmp/gemini-response.txt 2>/dev/null &
-echo "..." | codex exec --sandbox read-only ... > /tmp/codex-response.txt 2>/dev/null &
+gemini -m gemini-3-pro "..." > /tmp/gemini-response.txt 2>/dev/null &
+echo "..." | codex exec -m gpt-5.2 --sandbox read-only --skip-git-repo-check > /tmp/codex-response.txt 2>/dev/null &
 wait
 ```
 
