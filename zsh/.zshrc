@@ -64,6 +64,7 @@ alias find="fd"
 alias rm="trash"
 alias top="btop"
 alias help="tldr"
+alias npx="bunx"
 
 # Git
 alias gs="git status"
