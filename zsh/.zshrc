@@ -33,6 +33,9 @@ bindkey -r '^R'  # Let atuin handle Ctrl+R
 # Direnv (per-directory env)
 eval "$(direnv hook zsh)"
 
+# You Should Use (alias reminders)
+source /opt/homebrew/share/zsh-you-should-use/you-should-use.plugin.zsh
+
 # --- 3. Completions ---
 autoload -Uz compinit && compinit
 fpath=(~/.docker/completions $fpath)

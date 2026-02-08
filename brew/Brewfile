@@ -60,6 +60,7 @@ brew "tree"
 brew "watch"
 brew "wget"
 brew "zoxide"
+brew "zsh-you-should-use"
 brew "cue-lang/tap/cue", link: false
 brew "redpanda-data/tap/redpanda"
 brew "txn2/tap/kubefwd"
