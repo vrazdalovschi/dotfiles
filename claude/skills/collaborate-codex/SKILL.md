@@ -8,7 +8,7 @@ description: Use when the user asks to run Codex CLI (codex exec, codex resume) 
 Orchestrate OpenAI Codex CLI for code analysis, refactoring, and automated editing tasks.
 
 ## Running a Task
-1. Ask the user (via `AskUserQuestion`) which model to run (`gpt-5.2-codex` or `gpt-5.2`) AND which reasoning effort to use (`xhigh`, `high`, `medium`, or `low`) in a **single prompt with two questions**.
+1. Ask the user (via `AskUserQuestion`) which model to run (`gpt-5.3-codex` or `gpt-5.3`) AND which reasoning effort to use (`xhigh`, `high`, `medium`, or `low`) in a **single prompt with two questions**.
 2. Select the sandbox mode required for the task; default to `--sandbox read-only` unless edits or network access are necessary.
 3. Assemble the command with the appropriate options:
    - `-m, --model <MODEL>`
@@ -17,6 +17,7 @@ Orchestrate OpenAI Codex CLI for code analysis, refactoring, and automated editi
    - `--full-auto`
    - `-C, --cd <DIR>`
    - `--skip-git-repo-check`
+   - `-o, --output <FILE>` (save response to file for later review)
 4. When continuing a previous session, use `codex exec --skip-git-repo-check resume --last` via stdin. When resuming don't use any configuration flags unless explicitly requested by the user e.g. if he species the model or the reasoning effort when requesting to resume a session. Resume syntax: `echo "your prompt here" | codex exec --skip-git-repo-check resume --last 2>/dev/null`. All flags have to be inserted between exec and resume.
 5. **IMPORTANT**: By default, append `2>/dev/null` to all `codex exec` commands to suppress thinking tokens (stderr). Only show stderr if the user explicitly requests to see thinking tokens or if debugging is needed.
 6. Run the command, capture stdout/stderr (filtered as appropriate), and summarize the outcome for the user.
@@ -30,6 +31,33 @@ Orchestrate OpenAI Codex CLI for code analysis, refactoring, and automated editi
 | Permit network or broad access | `danger-full-access` | `--sandbox danger-full-access --full-auto 2>/dev/null` |
 | Resume recent session | Inherited from original | `echo "prompt" \| codex exec --skip-git-repo-check resume --last 2>/dev/null` (flags go between exec and resume if needed) |
 | Run from another directory | Match task needs | `-C <DIR>` plus other flags `2>/dev/null` |
+| Save output to file | Any | Add `-o /tmp/reply.txt` |
+
+### File-Based Workflow (Complex Problems)
+
+For debugging with extensive context, use file-based input/output:
+
+```bash
+# Write structured question to file
+cat > /tmp/question.txt << 'EOF'
+## Problem
+[Clear problem statement]
+
+## Code
+[Complete, untruncated functions]
+
+## Observations
+[Specific failure conditions, what you've tried]
+
+## Questions
+[Specific questions]
+EOF
+
+# Run with file input and output
+cat /tmp/question.txt | codex exec -o /tmp/reply.txt --full-auto 2>/dev/null
+```
+
+This enables question refinement before sending and preserves analysis for later.
 
 ## Following Up
 - After every `codex` command, immediately use `AskUserQuestion` to confirm next steps, collect clarifications, or decide whether to resume with `codex exec resume --last`.
