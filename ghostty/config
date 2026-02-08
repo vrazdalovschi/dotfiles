@@ -36,3 +36,6 @@ keybind = cmd+shift+j=write_scrollback_file:paste
 
 # Step 2: Prepend 'zed ' and execute (press after cmd+shift+j)
 keybind = cmd+alt+shift+j=text:zed \x1b[H\n
+
+# --- Security ---
+macos-secure-input-indication = true
