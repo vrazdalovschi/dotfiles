@@ -334,6 +334,9 @@ youtube lofi beats        # Opens browser with YouTube search
 - [fzf](https://github.com/junegunn/fzf) - Fuzzy finder
 - [fd](https://github.com/sharkdp/fd) - Fast `find` replacement
 - [direnv](https://direnv.net/) - Per-directory environment
+- [zsh-you-should-use](https://github.com/MichaelAquilina/zsh-you-should-use) - Alias reminders
+- [zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions) - History-based ghost-text suggestions
+- [zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting) - Command syntax coloring
 
 ### mise (Runtime Manager)
 Manages versions for:

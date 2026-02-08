@@ -36,6 +36,12 @@ eval "$(direnv hook zsh)"
 # You Should Use (alias reminders)
 source /opt/homebrew/share/zsh-you-should-use/you-should-use.plugin.zsh
 
+# Autosuggestions (ghost-text from history, accept with →)
+source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+# Syntax Highlighting (green=valid, red=invalid commands)
+source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
 # --- 3. Completions ---
 autoload -Uz compinit && compinit
 fpath=(~/.docker/completions $fpath)
