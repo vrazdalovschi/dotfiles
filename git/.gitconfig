@@ -30,3 +30,15 @@
 
 [push]
     autoSetupRemote = true
+
+[gpg]
+    format = ssh
+
+[user]
+    signingkey = ~/.ssh/vrazdalovschi.pub
+
+[commit]
+    gpgsign = true
+
+[tag]
+    gpgsign = true
