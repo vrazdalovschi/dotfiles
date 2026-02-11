@@ -1,4 +1,5 @@
 tap "cue-lang/tap"
+tap "daveshanley/vacuum"
 tap "ngrok/ngrok"
 tap "pantsbuild/tap"
 tap "redpanda-data/tap"
@@ -64,6 +65,7 @@ brew "zsh-autosuggestions"
 brew "zsh-syntax-highlighting"
 brew "zsh-you-should-use"
 brew "cue-lang/tap/cue", link: false
+brew "daveshanley/vacuum/vacuum"
 brew "redpanda-data/tap/redpanda"
 brew "txn2/tap/kubefwd"
 brew "withgraphite/tap/graphite"

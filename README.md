@@ -309,6 +309,9 @@ youtube lofi beats        # Opens browser with YouTube search
 **Networking:**
 `curl`, `wget`, `nmap`, `gping`, `tailscale`, `grpcurl`
 
+**API:**
+`vacuum` (OpenAPI linter)
+
 **Data:**
 `jq`, `cue`
 
