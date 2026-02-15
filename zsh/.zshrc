@@ -1,50 +1,74 @@
 # --- 1. Path Setup ---
 export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 
+# Homebrew prefix (supports Apple Silicon and Intel installs)
+if command -v brew >/dev/null 2>&1; then
+  HOMEBREW_PREFIX="$(brew --prefix)"
+else
+  HOMEBREW_PREFIX="/opt/homebrew"
+fi
+
 # Google Cloud SDK
 export USE_GKE_GCLOUD_AUTH_PLUGIN=True
-export PATH="/opt/homebrew/share/google-cloud-sdk/bin:$PATH"
+export PATH="$HOMEBREW_PREFIX/share/google-cloud-sdk/bin:$PATH"
 export PATH="$HOME/go/bin:$PATH"
 export PATH="$HOME/.bun/bin:$PATH"
-export PATH="/opt/homebrew/opt/trash/bin:$PATH"
+export PATH="$HOMEBREW_PREFIX/opt/trash/bin:$PATH"
 
 # --- 2. Tool Initializations ---
 
 # Mise (Runtime/Environment Manager)
-eval "$(/opt/homebrew/bin/mise activate zsh)"
+if command -v mise >/dev/null 2>&1; then
+  eval "$(mise activate zsh)"
+fi
 
 # Atuin (History Search - Ctrl+R)
-. "$HOME/.atuin/bin/env"
-eval "$(atuin init zsh)"
+[[ -f "$HOME/.atuin/bin/env" ]] && . "$HOME/.atuin/bin/env"
+if command -v atuin >/dev/null 2>&1; then
+  eval "$(atuin init zsh)"
+fi
 
 # Starship (Prompt)
-eval "$(starship init zsh)"
+if command -v starship >/dev/null 2>&1; then
+  eval "$(starship init zsh)"
+fi
 
 # Zoxide (Smart cd)
-eval "$(zoxide init zsh)"
+if command -v zoxide >/dev/null 2>&1; then
+  eval "$(zoxide init zsh)"
+fi
 
 # fzf (Fuzzy Finder - Ctrl+T for files, Option+C for dirs)
-source <(fzf --zsh)
+if command -v fzf >/dev/null 2>&1; then
+  source <(fzf --zsh)
+fi
 export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND='fd --type d --hidden --follow --exclude .git'
-bindkey -r '^R'  # Let atuin handle Ctrl+R
+
+# Ensure Atuin owns Ctrl+R after fzf keybindings are loaded.
+if (( ${+widgets[atuin-search]} )); then
+  bindkey -M emacs '^R' atuin-search
+  if (( ${+widgets[atuin-search-viins]} )); then
+    bindkey -M viins '^R' atuin-search-viins
+  fi
+fi
 
 # Direnv (per-directory env)
-eval "$(direnv hook zsh)"
+if command -v direnv >/dev/null 2>&1; then
+  eval "$(direnv hook zsh)"
+fi
 
 # You Should Use (alias reminders)
-source /opt/homebrew/share/zsh-you-should-use/you-should-use.plugin.zsh
+[[ -f "$HOMEBREW_PREFIX/share/zsh-you-should-use/you-should-use.plugin.zsh" ]] && source "$HOMEBREW_PREFIX/share/zsh-you-should-use/you-should-use.plugin.zsh"
 
 # Autosuggestions (ghost-text from history, accept with →)
-source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-
-# Syntax Highlighting (green=valid, red=invalid commands)
-source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+[[ -f "$HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]] && source "$HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
 
 # --- 3. Completions ---
-autoload -Uz compinit && compinit
-fpath=(~/.docker/completions $fpath)
+fpath=("$HOME/.docker/completions" $fpath)
+mkdir -p "$HOME/.cache/zsh"
+autoload -Uz compinit && compinit -d "$HOME/.cache/zsh/zcompdump-${ZSH_VERSION}"
 
 # bun
 [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
@@ -136,3 +160,6 @@ github() {
 youtube() {
   open "https://www.youtube.com/results?search_query=${*// /+}"
 }
+
+# Syntax Highlighting (green=valid, red=invalid commands)
+[[ -f "$HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]] && source "$HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
