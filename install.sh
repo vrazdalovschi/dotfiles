@@ -48,6 +48,20 @@ link "$DOTFILES_DIR/claude/settings.json" ~/.claude/settings.json
 link "$DOTFILES_DIR/claude/statusline-command.sh" ~/.claude/statusline-command.sh
 link "$DOTFILES_DIR/claude/skills" ~/.claude/skills
 link "$DOTFILES_DIR/claude/commands" ~/.claude/commands
+link "$DOTFILES_DIR/claude/hooks" ~/.claude/hooks
+
+echo ""
+echo "==> Linking Codex configs..."
+mkdir -p ~/.codex
+link "$DOTFILES_DIR/AGENTS.md" ~/.codex/AGENTS.md
+link "$DOTFILES_DIR/codex/skills" ~/.codex/skills
+
+echo ""
+echo "==> Linking Gemini CLI configs..."
+mkdir -p ~/.gemini
+link "$DOTFILES_DIR/gemini/GEMINI.md" ~/.gemini/GEMINI.md
+link "$DOTFILES_DIR/gemini/settings.json" ~/.gemini/settings.json
+link "$DOTFILES_DIR/gemini/skills" ~/.gemini/skills
 
 echo ""
 echo "==> Linking zsh config..."

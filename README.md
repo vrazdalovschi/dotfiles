@@ -4,17 +4,19 @@ Personal configuration files for macOS development environment.
 
 ## What's Included
 
-| Component | Description |
-|-----------|-------------|
-| **zsh** | Shell config with starship prompt, modern CLI tools (eza, bat, zoxide, atuin, fzf) |
-| **git** | Git config with delta pager, Zed editor |
-| **mise** | Runtime version manager config (node, python, go, terraform) |
-| **zed** | Zed editor settings |
-| **claude** | Claude Code settings, custom skills, statusline, and commands |
-| **ghostty** | Terminal emulator configuration |
-| **brew** | All Homebrew packages (Brewfile) |
-| **bun** | Global bun packages (package.json) |
-| **ssh** | SSH defaults (AddKeysToAgent, UseKeychain) |
+| Component   | Description                                                                        |
+| ----------- | ---------------------------------------------------------------------------------- |
+| **zsh**     | Shell config with starship prompt, modern CLI tools (eza, bat, zoxide, atuin, fzf) |
+| **git**     | Git config with delta pager, Zed editor                                            |
+| **mise**    | Runtime version manager config (node, python, go, terraform)                       |
+| **zed**     | Zed editor settings                                                                |
+| **claude**  | Claude Code settings, custom skills, statusline, and commands                      |
+| **codex**   | Codex skills                                                                       |
+| **gemini**  | Gemini CLI settings and skills                                                     |
+| **ghostty** | Terminal emulator configuration                                                    |
+| **brew**    | All Homebrew packages (Brewfile)                                                   |
+| **bun**     | Global bun packages (package.json)                                                 |
+| **ssh**     | SSH defaults (AddKeysToAgent, UseKeychain)                                         |
 
 ## Quick Start
 
@@ -36,6 +38,7 @@ cd ~/dotfiles && ./install.sh
 ```
 
 The install script will:
+
 - Create symlinks for all config files
 - Backup existing configs (`.backup` suffix)
 - Install all Homebrew packages
@@ -54,6 +57,8 @@ cd ~/dotfiles && ./install.sh
 ```
 dotfiles/
 ├── install.sh           # Setup script
+├── AGENTS.md            # Shared agent instructions
+├── CLAUDE.md -> AGENTS.md
 ├── brew/
 │   └── Brewfile         # Homebrew packages
 ├── bun/
@@ -63,13 +68,19 @@ dotfiles/
 ├── mise/
 │   └── config.toml      # Runtime versions (node, python, go, terraform)
 ├── zed/
-│   └── settings.json    # Zed editor config
+│   ├── settings.json    # Zed editor config
 ├── claude/
 │   ├── CLAUDE.md        # Global instructions
 │   ├── settings.json    # Claude Code settings
 │   ├── statusline-command.sh
 │   ├── skills/          # Custom skills
 │   └── commands/        # Custom commands
+├── codex/
+│   └── skills/          # Codex skills
+├── gemini/
+│   ├── GEMINI.md        # Global instructions
+│   ├── settings.json    # Gemini CLI settings
+│   └── skills/          # Custom skills
 ├── ghostty/
 │   └── config
 ├── ssh/
@@ -83,17 +94,20 @@ dotfiles/
 
 ## Symlink Mapping
 
-| Repo Path | System Path |
-|-----------|-------------|
-| `zsh/.zshrc` | `~/.zshrc` |
-| `git/.gitconfig` | `~/.gitconfig` |
-| `git/.gitignore_global` | `~/.gitignore_global` |
-| `mise/config.toml` | `~/.config/mise/config.toml` |
-| `zed/settings.json` | `~/.config/zed/settings.json` |
-| `ghostty/config` | `~/.config/ghostty/config` |
-| `claude/*` | `~/.claude/*` |
-| `bun/package.json` | `~/.bun/install/global/package.json` |
-| `ssh/config.d/*` | Included via `~/.ssh/config` (not symlinked) |
+| Repo Path               | System Path                                  |
+| ----------------------- | -------------------------------------------- |
+| `zsh/.zshrc`            | `~/.zshrc`                                   |
+| `git/.gitconfig`        | `~/.gitconfig`                               |
+| `git/.gitignore_global` | `~/.gitignore_global`                        |
+| `mise/config.toml`      | `~/.config/mise/config.toml`                 |
+| `zed/settings.json`     | `~/.config/zed/settings.json`                |
+| `zed/keymap.json`       | `~/.config/zed/keymap.json`                  |
+| `ghostty/config`        | `~/.config/ghostty/config`                   |
+| `claude/*`              | `~/.claude/*`                                |
+| `codex/skills`          | `~/.codex/skills`                            |
+| `gemini/*`              | `~/.gemini/*`                                |
+| `bun/package.json`      | `~/.bun/install/global/package.json`         |
+| `ssh/config.d/*`        | Included via `~/.ssh/config` (not symlinked) |
 
 ## Daily Workflow
 
@@ -126,6 +140,7 @@ cd ~/dotfiles && git add -A && git commit -m "update brewfile" && git push
 Bun global packages are tracked automatically via symlink to `bun/package.json`.
 
 **Auto-update prompt:** Once per day, the first terminal checks for updates and prompts:
+
 ```
 📦 Bun global package updates available:
 ┌───────────────────────────┬─────────┬────────┐
@@ -138,6 +153,7 @@ Update now? [y/N]
 ```
 
 **Manual commands:**
+
 ```bash
 # Force update check now
 rm ~/.cache/bun-update-check && exec zsh
@@ -157,11 +173,11 @@ bun install -g <package>
 
 ## Keyboard Shortcuts
 
-| Shortcut | Tool | What it does |
-|----------|------|--------------|
-| `Ctrl+R` | [atuin](https://github.com/atuinsh/atuin) | Search command history |
-| `Ctrl+T` | [fzf](https://github.com/junegunn/fzf) | Fuzzy find file and insert path |
-| `Option+C` | [fzf](https://github.com/junegunn/fzf) | Fuzzy find directory and cd into it |
+| Shortcut   | Tool                                      | What it does                        |
+| ---------- | ----------------------------------------- | ----------------------------------- |
+| `Ctrl+R`   | [atuin](https://github.com/atuinsh/atuin) | Search command history              |
+| `Ctrl+T`   | [fzf](https://github.com/junegunn/fzf)    | Fuzzy find file and insert path     |
+| `Option+C` | [fzf](https://github.com/junegunn/fzf)    | Fuzzy find directory and cd into it |
 
 ## Modern CLI Tools
 
@@ -217,19 +233,19 @@ lg                        # Opens lazygit (aliased)
 
 ## Command Aliases
 
-| Alias | Actual Command | Description |
-|-------|----------------|-------------|
-| `ls` | `eza --icons --git` | List with icons and git status |
-| `ll` | `eza -l --icons --git` | Long list |
-| `la` | `eza -la --icons --git` | List all including hidden |
-| `lt` | `eza --tree --level=2` | Tree view |
-| `cat` | `bat` | Syntax highlighted output |
-| `find` | `fd` | Fast file finder |
-| `rm` | `trash` | Safe delete to Trash |
-| `top` | `btop` | Beautiful system monitor |
-| `help` | `tldr` | Simplified man pages |
-| `lg` | `lazygit` | Git TUI |
-| `z` | `zoxide` | Smart directory jump |
+| Alias  | Actual Command          | Description                    |
+| ------ | ----------------------- | ------------------------------ |
+| `ls`   | `eza --icons --git`     | List with icons and git status |
+| `ll`   | `eza -l --icons --git`  | Long list                      |
+| `la`   | `eza -la --icons --git` | List all including hidden      |
+| `lt`   | `eza --tree --level=2`  | Tree view                      |
+| `cat`  | `bat`                   | Syntax highlighted output      |
+| `find` | `fd`                    | Fast file finder               |
+| `rm`   | `trash`                 | Safe delete to Trash           |
+| `top`  | `btop`                  | Beautiful system monitor       |
+| `help` | `tldr`                  | Simplified man pages           |
+| `lg`   | `lazygit`               | Git TUI                        |
+| `z`    | `zoxide`                | Smart directory jump           |
 
 ## Search Functions
 
@@ -242,61 +258,69 @@ youtube lofi beats        # Opens browser with YouTube search
 ## Installed Applications
 
 ### IDEs & Editors
-| App | Description | Managed By |
-|-----|-------------|------------|
-| [Zed](https://zed.dev/) | Fast, modern code editor | Homebrew |
+
+| App                     | Description              | Managed By |
+| ----------------------- | ------------------------ | ---------- |
+| [Zed](https://zed.dev/) | Fast, modern code editor | Homebrew   |
 
 ### Terminal & Shell
-| App | Description | Managed By |
-|-----|-------------|------------|
-| [Ghostty](https://ghostty.org/) | GPU-accelerated terminal | Homebrew |
-| [Starship](https://starship.rs/) | Minimal prompt | mise |
+
+| App                              | Description              | Managed By |
+| -------------------------------- | ------------------------ | ---------- |
+| [Ghostty](https://ghostty.org/)  | GPU-accelerated terminal | Homebrew   |
+| [Starship](https://starship.rs/) | Minimal prompt           | mise       |
 
 ### DevOps & Kubernetes
-| App | Description | Managed By |
-|-----|-------------|------------|
-| [Google Cloud SDK](https://cloud.google.com/sdk) | GCP CLI (gcloud, gsutil, gke-gcloud-auth-plugin) | Homebrew |
-| [Lens](https://k8slens.dev/) | Kubernetes IDE | Homebrew |
-| k3d, kustomize, stern, kubefwd | K8s CLI tools | Homebrew |
-| [Terraform](https://terraform.io/), tflint, terramate | Infrastructure as code | mise / Homebrew |
+
+| App                                                   | Description                                      | Managed By      |
+| ----------------------------------------------------- | ------------------------------------------------ | --------------- |
+| [Google Cloud SDK](https://cloud.google.com/sdk)      | GCP CLI (gcloud, gsutil, gke-gcloud-auth-plugin) | Homebrew        |
+| [Lens](https://k8slens.dev/)                          | Kubernetes IDE                                   | Homebrew        |
+| k3d, kustomize, stern, kubefwd                        | K8s CLI tools                                    | Homebrew        |
+| [Terraform](https://terraform.io/), tflint, terramate | Infrastructure as code                           | mise / Homebrew |
 
 ### API & Development
-| App | Description | Managed By |
-|-----|-------------|------------|
-| [Insomnia](https://insomnia.rest/) | API client | Homebrew |
-| [ngrok](https://ngrok.com/) | Tunneling | Homebrew |
+
+| App                                | Description | Managed By |
+| ---------------------------------- | ----------- | ---------- |
+| [Insomnia](https://insomnia.rest/) | API client  | Homebrew   |
+| [ngrok](https://ngrok.com/)        | Tunneling   | Homebrew   |
 
 ### Productivity & Utilities
-| App | Description | Managed By |
-|-----|-------------|------------|
-| [Raycast](https://raycast.com/) | Launcher (Spotlight replacement) | Homebrew |
-| [Maccy](https://maccy.app/) | Clipboard manager | Homebrew |
-| [AltTab](https://alt-tab-macos.netlify.app/) | Window switcher | Homebrew |
-| [Stats](https://github.com/exelban/stats) | Menubar system monitor | Homebrew |
+
+| App                                          | Description                      | Managed By |
+| -------------------------------------------- | -------------------------------- | ---------- |
+| [Raycast](https://raycast.com/)              | Launcher (Spotlight replacement) | Homebrew   |
+| [Maccy](https://maccy.app/)                  | Clipboard manager                | Homebrew   |
+| [AltTab](https://alt-tab-macos.netlify.app/) | Window switcher                  | Homebrew   |
+| [Stats](https://github.com/exelban/stats)    | Menubar system monitor           | Homebrew   |
 
 ### Communication
-| App | Description | Managed By |
-|-----|-------------|------------|
-| [Telegram](https://telegram.org/) | Messaging | Homebrew |
-| [Microsoft Remote Desktop](https://aka.ms/rdmac) | RDP client | Homebrew |
+
+| App                               | Description | Managed By |
+| --------------------------------- | ----------- | ---------- |
+| [Telegram](https://telegram.org/) | Messaging   | Homebrew   |
 
 ### Media
-| App | Description | Managed By |
-|-----|-------------|------------|
-| [IINA](https://iina.io/) | Video player | Homebrew |
+
+| App                      | Description  | Managed By |
+| ------------------------ | ------------ | ---------- |
+| [IINA](https://iina.io/) | Video player | Homebrew   |
 
 ### Voice & Dictation
-| App | Description | Managed By |
-|-----|-------------|------------|
-| [Superwhisper](https://superwhisper.com/) | Local AI voice-to-text | Manual |
+
+| App                                       | Description            | Managed By |
+| ----------------------------------------- | ---------------------- | ---------- |
+| [Superwhisper](https://superwhisper.com/) | Local AI voice-to-text | Manual     |
 
 ### AI Coding Assistants
-| Tool | Description | Managed By |
-|------|-------------|------------|
-| [Claude Code](https://docs.anthropic.com/en/docs/claude-code) | Anthropic's CLI for Claude | native |
-| [Gemini CLI](https://github.com/anthropics/gemini-cli) | Google's Gemini CLI | bun |
-| [Codex](https://github.com/openai/codex) | OpenAI's coding agent | bun |
-| [Shopify CLI](https://shopify.dev/docs/api/shopify-cli) | Shopify development CLI | bun |
+
+| Tool                                                          | Description                | Managed By |
+| ------------------------------------------------------------- | -------------------------- | ---------- |
+| [Claude Code](https://docs.anthropic.com/en/docs/claude-code) | Anthropic's CLI for Claude | native     |
+| [Gemini CLI](https://github.com/anthropics/gemini-cli)        | Google's Gemini CLI        | bun        |
+| [Codex](https://github.com/openai/codex)                      | OpenAI's coding agent      | bun        |
+| [Shopify CLI](https://shopify.dev/docs/api/shopify-cli)       | Shopify development CLI    | bun        |
 
 ### CLI Tools (Homebrew)
 
@@ -317,18 +341,19 @@ youtube lofi beats        # Opens browser with YouTube search
 
 ### Runtime Versions (mise)
 
-| Tool | Description |
-|------|-------------|
-| node | JavaScript runtime |
-| python | Python runtime |
-| go | Go runtime |
-| terraform | Infrastructure as code |
-| pnpm, uv, bun | Package managers |
-| helm, k9s, hadolint, shellcheck, lefthook | DevOps tools |
+| Tool                                      | Description            |
+| ----------------------------------------- | ---------------------- |
+| node                                      | JavaScript runtime     |
+| python                                    | Python runtime         |
+| go                                        | Go runtime             |
+| terraform                                 | Infrastructure as code |
+| pnpm, uv, bun, pipx                       | Package managers       |
+| helm, k9s, hadolint, shellcheck, lefthook | DevOps tools           |
 
 ## Tools Configured
 
 ### Shell (zsh)
+
 - [starship](https://starship.rs/) - Minimal prompt
 - [eza](https://github.com/eza-community/eza) - Modern `ls` with icons
 - [bat](https://github.com/sharkdp/bat) - `cat` with syntax highlighting
@@ -342,7 +367,9 @@ youtube lofi beats        # Opens browser with YouTube search
 - [zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting) - Command syntax coloring
 
 ### mise (Runtime Manager)
+
 Manages versions for:
+
 - **node** - JavaScript runtime
 - **python** - Python runtime
 - **go** - Go runtime
@@ -353,12 +380,13 @@ Manages versions for:
 See [mise.jdx.dev](https://mise.jdx.dev) for docs.
 
 ### Claude Code
+
 - Custom skills for PostgreSQL, SQLMesh, planning workflows
 - Statusline showing git/project info
-- Global instructions in CLAUDE.md
+- Shared agent instructions in AGENTS.md (CLAUDE.md symlink)
 
 ## Reference Docs
 
-| Doc | Description |
-|-----|-------------|
+| Doc                                        | Description                                    |
+| ------------------------------------------ | ---------------------------------------------- |
 | [Port Management](docs/port-management.md) | Solving port conflicts in parallel development |
