@@ -1,2 +1,2 @@
 - Write lowercase commit titles (max 50 characters)
-- Always launch opus subagents unless specified otherwise
+- Never use these words in outputs, docstrings, or commit messages: "consolidate", "modernize", "streamline", "flexible", "delve", "establish", "enhanced", "comprehensive", "optimize", "leverage", "robust", "seamless", "cutting-edge"

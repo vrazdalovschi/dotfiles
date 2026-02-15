@@ -1,11 +1,47 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "env": {
+    "CLAUDE_BASH_MAINTAIN_PROJECT_WORKING_DIR": "1",
+    "CLAUDE_CODE_DISABLE_FEEDBACK_SURVEY": "1",
+    "DISABLE_TELEMETRY": "1",
+    "MAX_MCP_OUTPUT_TOKENS": "40000"
+  },
+  "permissions": {
+    "allow": [],
+    "deny": [],
+    "defaultMode": "default"
+  },
+  "hooks": {
+    "Notification": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ~/.claude/hooks/notify.sh"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ~/.claude/hooks/enforce_rg_over_grep.py"
+          }
+        ]
+      }
+    ]
+  },
   "statusLine": {
     "type": "command",
     "command": "bash ~/.claude/statusline-command.sh"
   },
   "enabledPlugins": {
-    "dev-browser@dev-browser-marketplace": false
+    "webflow-skills@webflow-skills": true,
+    "superpowers@claude-plugins-official": true
   },
   "alwaysThinkingEnabled": true,
   "promptSuggestionEnabled": false,
