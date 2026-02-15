@@ -11,6 +11,8 @@ font-feature = liga
 # Give the text some breathing room (looks much better)
 window-padding-x = 12
 window-padding-y = 12
+window-inherit-working-directory = true
+copy-on-select = clipboard
 
 # Blur the background slightly (native macOS feel)
 background-opacity = 0.96
@@ -20,6 +22,7 @@ background-blur-radius = 20
 # Make it feel alive
 cursor-style = block
 cursor-style-blink = true
+shell-integration-features = no-cursor
 
 # --- macOS Native Text Editing ---
 # Map Option+Delete to send Ctrl+W (Delete Word)
@@ -36,6 +39,11 @@ keybind = cmd+shift+j=write_scrollback_file:paste
 
 # Step 2: Prepend 'zed ' and execute (press after cmd+shift+j)
 keybind = cmd+alt+shift+j=text:zed \x1b[H\n
+
+# --- Workflow Shortcuts ---
+keybind = cmd+shift+p=toggle_command_palette
+keybind = cmd+shift+r=reload_config
+keybind = global:cmd+alt+t=toggle_quick_terminal
 
 # --- Security ---
 macos-secure-input-indication = true
