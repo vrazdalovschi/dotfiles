@@ -8,17 +8,36 @@
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
   "git_panel": {
-    "tree_view": true
+    "tree_view": true,
   },
   "features": {
-    "edit_prediction_provider": "zed"
+    "edit_prediction_provider": "zed",
   },
   "base_keymap": "JetBrains",
   "ui_font_size": 16,
   "buffer_font_size": 16,
+  "format_on_save": "on",
+  "autosave": "on_focus_change",
+  "load_direnv": "shell_hook",
+  "terminal": {
+    "detect_venv": {
+      "on": {
+        "directories": [".venv", "venv", ".env", "env"],
+        "activate_script": "default",
+      },
+    },
+  },
+  "agent_servers": {
+    "claude": {
+      "ignore_system_version": false,
+    },
+    "gemini": {
+      "ignore_system_version": false,
+    },
+  },
   "theme": {
     "mode": "system",
     "light": "One Light",
-    "dark": "One Dark"
-  }
+    "dark": "One Dark",
+  },
 }
