@@ -14,6 +14,10 @@ Personal macOS development environment configuration managed via symlinks.
 
 5. **Check for duplicates before adding** - Before adding any package, tool, plugin, skill, alias, or config entry, check whether it already exists in the relevant file (Brewfile, mise config, .zshrc, settings, etc.). Never create duplicate entries.
 
+6. **Re-run install.sh after any skill changes** - Any time a skill is added, removed, renamed, or moved (shared or tool-specific), run `./install.sh` to refresh skill symlinks.
+
+7. **Use shared vs tool-specific skill locations correctly** - Put skills used by multiple tools in `agents/skills/shared/`. Put tool-only skills in `codex/skills/`, `claude/skills/`, or `gemini/skills/` as appropriate.
+
 ## Commands
 
 ```bash
@@ -31,7 +35,10 @@ brew bundle dump --file=brew/Brewfile --force  # Export current brew packages
 | `git/.gitconfig` | Git settings (delta, zed editor) |
 | `ghostty/config` | Terminal config |
 | `zed/settings.json` | Editor settings |
+| `agents/skills/shared/` | Skills shared across Codex, Claude, and Gemini |
+| `codex/skills/` | Codex-specific skills |
 | `claude/` | Claude Code skills and settings |
+| `gemini/` | Gemini CLI settings and skills |
 
 ## Symlink Mapping
 
@@ -49,3 +56,10 @@ All configs are symlinked from this repo to their system locations. After `insta
 1. Add config to appropriate folder in this repo
 2. Update `install.sh` to create the symlink
 3. Update README.md with new symlink mapping
+
+## Adding or Updating Skills
+
+1. **Shared skill**: Add to `agents/skills/shared/<skill-name>/SKILL.md`
+2. **Tool-specific skill**: Add to `codex/skills/`, `claude/skills/`, or `gemini/skills/`
+3. **Check duplicates first**: Ensure no existing skill with the same name in the same target scope
+4. **Always run installer**: Run `./install.sh` after any skill add/remove/rename/move so symlinks are refreshed

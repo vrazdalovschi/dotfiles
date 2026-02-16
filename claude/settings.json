@@ -40,8 +40,8 @@
     "command": "bash ~/.claude/statusline-command.sh"
   },
   "enabledPlugins": {
-    "webflow-skills@webflow-skills": true,
-    "superpowers@claude-plugins-official": true
+    "webflow-skills@webflow-skills": false,
+    "superpowers@claude-plugins-official": false
   },
   "alwaysThinkingEnabled": true,
   "promptSuggestionEnabled": false,

@@ -41,27 +41,170 @@ link() {
     echo "Linked $src -> $dest"
 }
 
+# Ensure the destination exists as a real directory (not a symlink).
+ensure_directory() {
+    local dir="$1"
+
+    if [ -L "$dir" ]; then
+        rm "$dir"
+    elif [ -e "$dir" ] && [ ! -d "$dir" ]; then
+        echo "Backing up $dir to $dir.backup"
+        mv "$dir" "$dir.backup"
+    fi
+
+    mkdir -p "$dir"
+}
+
+# Link skill directories from source root into destination.
+# Precedence is defined by call order: later calls override earlier ones.
+sync_skill_source() {
+    local src_root="$1"
+    local dest_root="$2"
+    local source_label="$3"
+
+    if [ ! -d "$src_root" ]; then
+        return
+    fi
+
+    for skill_dir in "$src_root"/*; do
+        [ -d "$skill_dir" ] || continue
+        [ -f "$skill_dir/SKILL.md" ] || continue
+
+        local skill_name
+        skill_name="$(basename "$skill_dir")"
+        local dest_path="$dest_root/$skill_name"
+
+        if [ -e "$dest_path" ] && [ ! -L "$dest_path" ]; then
+            echo "Skipping $dest_path (exists and is not a symlink)"
+            continue
+        fi
+
+        ln -sfn "$skill_dir" "$dest_path"
+        echo "Linked $source_label skill $skill_name"
+    done
+}
+
+# List skill names discovered in a source root.
+list_skill_names() {
+    local src_root="$1"
+
+    if [ ! -d "$src_root" ]; then
+        return
+    fi
+
+    for skill_dir in "$src_root"/*; do
+        [ -d "$skill_dir" ] || continue
+        [ -f "$skill_dir/SKILL.md" ] || continue
+        basename "$skill_dir"
+    done
+}
+
+# Remove stale symlinks that point to managed sources but no longer exist in desired names.
+remove_stale_managed_symlinks() {
+    local dest_root="$1"
+    local desired_names="$2"
+    shift 2
+    local managed_roots=("$@")
+
+    for existing in "$dest_root"/*; do
+        [ -L "$existing" ] || continue
+
+        local skill_name
+        skill_name="$(basename "$existing")"
+        if [ -n "$desired_names" ] && printf '%s\n' "$desired_names" | grep -Fxq "$skill_name"; then
+            continue
+        fi
+
+        local target
+        target="$(readlink "$existing" || true)"
+
+        local is_managed_target=0
+        for root in "${managed_roots[@]}"; do
+            case "$target" in
+                "$root"/*)
+                    is_managed_target=1
+                    break
+                    ;;
+            esac
+        done
+
+        if [ "$is_managed_target" -eq 1 ]; then
+            rm -f "$existing"
+            echo "Removed stale managed skill $skill_name"
+        fi
+    done
+}
+
+# Sync skills for a specific agent:
+# 1) shared repo skills
+# 2) agent-specific repo skills
+# 3) codex system skills (codex only)
+# 4) optional local, non-versioned skills
+sync_agent_skills() {
+    local agent="$1"
+    local repo_agent_root="$2"
+    local dest_root="$3"
+    local shared_root="$DOTFILES_DIR/agents/skills/shared"
+    local local_root="$HOME/.agents/skills-local/$agent"
+    local codex_system_root="$DOTFILES_DIR/codex/skills/.system"
+    local desired_names=""
+
+    ensure_directory "$dest_root"
+
+    if [ "$agent" = "codex" ]; then
+        desired_names="$(
+            {
+                list_skill_names "$shared_root"
+                list_skill_names "$repo_agent_root"
+                list_skill_names "$codex_system_root"
+                list_skill_names "$local_root"
+            } | sort -u
+        )"
+        remove_stale_managed_symlinks "$dest_root" "$desired_names" \
+            "$shared_root" "$repo_agent_root" "$codex_system_root" "$local_root"
+    else
+        desired_names="$(
+            {
+                list_skill_names "$shared_root"
+                list_skill_names "$repo_agent_root"
+                list_skill_names "$local_root"
+            } | sort -u
+        )"
+        remove_stale_managed_symlinks "$dest_root" "$desired_names" \
+            "$shared_root" "$repo_agent_root" "$local_root"
+    fi
+
+    sync_skill_source "$shared_root" "$dest_root" "shared"
+    sync_skill_source "$repo_agent_root" "$dest_root" "$agent"
+    if [ "$agent" = "codex" ]; then
+        sync_skill_source "$codex_system_root" "$dest_root" "codex-system"
+    fi
+    sync_skill_source "$local_root" "$dest_root" "local-$agent"
+}
+
 echo ""
 echo "==> Linking Claude Code configs..."
+mkdir -p ~/.claude
 link "$DOTFILES_DIR/claude/CLAUDE.md" ~/.claude/CLAUDE.md
 link "$DOTFILES_DIR/claude/settings.json" ~/.claude/settings.json
 link "$DOTFILES_DIR/claude/statusline-command.sh" ~/.claude/statusline-command.sh
-link "$DOTFILES_DIR/claude/skills" ~/.claude/skills
 link "$DOTFILES_DIR/claude/commands" ~/.claude/commands
 link "$DOTFILES_DIR/claude/hooks" ~/.claude/hooks
+sync_agent_skills "claude" "$DOTFILES_DIR/claude/skills" "$HOME/.claude/skills"
 
 echo ""
 echo "==> Linking Codex configs..."
 mkdir -p ~/.codex
 link "$DOTFILES_DIR/AGENTS.md" ~/.codex/AGENTS.md
-link "$DOTFILES_DIR/codex/skills" ~/.codex/skills
+sync_agent_skills "codex" "$DOTFILES_DIR/codex/skills" "$HOME/.agents/skills"
+link "$HOME/.agents/skills" ~/.codex/skills
 
 echo ""
 echo "==> Linking Gemini CLI configs..."
 mkdir -p ~/.gemini
 link "$DOTFILES_DIR/gemini/GEMINI.md" ~/.gemini/GEMINI.md
 link "$DOTFILES_DIR/gemini/settings.json" ~/.gemini/settings.json
-link "$DOTFILES_DIR/gemini/skills" ~/.gemini/skills
+sync_agent_skills "gemini" "$DOTFILES_DIR/gemini/skills" "$HOME/.gemini/skills"
 
 echo ""
 echo "==> Linking zsh config..."

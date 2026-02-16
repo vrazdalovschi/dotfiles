@@ -10,9 +10,10 @@ Personal configuration files for macOS development environment.
 | **git**     | Git config with delta pager, Zed editor                                            |
 | **mise**    | Runtime version manager config (node, python, go, terraform)                       |
 | **zed**     | Zed editor settings                                                                |
+| **agents**  | Shared skills used across Codex, Claude, and Gemini                                |
 | **claude**  | Claude Code settings, custom skills, statusline, and commands                      |
-| **codex**   | Codex skills                                                                       |
-| **gemini**  | Gemini CLI settings and skills                                                     |
+| **codex**   | Codex-specific skills                                                              |
+| **gemini**  | Gemini-specific skills                                                             |
 | **ghostty** | Terminal emulator configuration                                                    |
 | **brew**    | All Homebrew packages (Brewfile)                                                   |
 | **bun**     | Global bun packages (package.json)                                                 |
@@ -63,6 +64,9 @@ dotfiles/
 │   └── Brewfile         # Homebrew packages
 ├── bun/
 │   └── package.json     # Global bun packages
+├── agents/
+│   └── skills/
+│       └── shared/      # Shared skills for all agents
 ├── git/
 │   └── .gitconfig       # Git config (delta, zed editor)
 ├── mise/
@@ -103,11 +107,32 @@ dotfiles/
 | `zed/settings.json`     | `~/.config/zed/settings.json`                |
 | `zed/keymap.json`       | `~/.config/zed/keymap.json`                  |
 | `ghostty/config`        | `~/.config/ghostty/config`                   |
-| `claude/*`              | `~/.claude/*`                                |
-| `codex/skills`          | `~/.codex/skills`                            |
-| `gemini/*`              | `~/.gemini/*`                                |
+| `claude/*` (except skills) | `~/.claude/*`                             |
+| `gemini/*` (except skills) | `~/.gemini/*`                             |
+| `agents/skills/shared/*`, `codex/skills/*`, `codex/skills/.system/*`, `$HOME/.agents/skills-local/codex/*` | `~/.agents/skills/*` |
+| `~/.agents/skills`      | `~/.codex/skills`                            |
+| `agents/skills/shared/*`, `claude/skills/*`, `$HOME/.agents/skills-local/claude/*` | `~/.claude/skills/*` |
+| `agents/skills/shared/*`, `gemini/skills/*`, `$HOME/.agents/skills-local/gemini/*` | `~/.gemini/skills/*` |
 | `bun/package.json`      | `~/.bun/install/global/package.json`         |
 | `ssh/config.d/*`        | Included via `~/.ssh/config` (not symlinked) |
+
+## Skills Layout
+
+`install.sh` syncs skills automatically; you do not need to edit the script for each new skill.
+
+Precedence (same skill name):
+
+1. Shared repo skills: `agents/skills/shared/*`
+2. Agent-specific repo skills: `codex/skills/*`, `claude/skills/*`, `gemini/skills/*`
+3. Codex built-in system skills (Codex only): `codex/skills/.system/*`
+4. Local, non-versioned overrides: `$HOME/.agents/skills-local/<agent>/*`
+
+Add a new skill:
+
+1. Shared across agents: add `agents/skills/shared/<skill>/SKILL.md`
+2. Agent-specific and versioned: add `<agent>/skills/<skill>/SKILL.md`
+3. Agent-specific and local only: add `$HOME/.agents/skills-local/<agent>/<skill>/SKILL.md`
+4. Run `./install.sh`
 
 ## Daily Workflow
 
