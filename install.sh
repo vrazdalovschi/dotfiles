@@ -10,21 +10,6 @@ mkdir -p ~/.config/ghostty
 mkdir -p ~/.config/mise
 mkdir -p ~/.config/zed
 mkdir -p ~/.bun/install/global
-mkdir -p ~/agents/logs/errors
-mkdir -p ~/agents/logs/successes
-
-# Initialize agents logs metadata if not exists
-if [ ! -f ~/agents/logs/metadata.json ]; then
-    cat > ~/agents/logs/metadata.json << 'EOF'
-{
-  "lastErrorId": 0,
-  "lastSuccessId": 0,
-  "description": "Tracks ID counters for error and success logs"
-}
-EOF
-    echo "Created ~/agents/logs/metadata.json"
-fi
-
 # Create symlink (works for files and directories)
 link() {
     local src="$1"
@@ -196,8 +181,7 @@ echo ""
 echo "==> Linking Codex configs..."
 mkdir -p ~/.codex
 link "$DOTFILES_DIR/AGENTS.md" ~/.codex/AGENTS.md
-sync_agent_skills "codex" "$DOTFILES_DIR/codex/skills" "$HOME/.agents/skills"
-link "$HOME/.agents/skills" ~/.codex/skills
+sync_agent_skills "codex" "$DOTFILES_DIR/codex/skills" "$HOME/.codex/skills"
 
 echo ""
 echo "==> Linking Gemini CLI configs..."
