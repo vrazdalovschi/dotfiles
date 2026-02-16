@@ -10,5 +10,8 @@
   "general": {
     "previewFeatures": true,
     "preferredEditor": "zed"
+  },
+  "tools": {
+    "useRipgrep": true
   }
 }

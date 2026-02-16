@@ -1,2 +1,3 @@
 - Write lowercase commit titles (max 50 characters)
 - Never use these words in outputs, docstrings, or commit messages: "consolidate", "modernize", "streamline", "flexible", "delve", "establish", "enhanced", "comprehensive", "optimize", "leverage", "robust", "seamless", "cutting-edge"
+- Always use `rg` (ripgrep) instead of `grep` for searching file contents

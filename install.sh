@@ -180,7 +180,7 @@ sync_agent_skills "claude" "$DOTFILES_DIR/claude/skills" "$HOME/.claude/skills"
 echo ""
 echo "==> Linking Codex configs..."
 mkdir -p ~/.codex
-link "$DOTFILES_DIR/AGENTS.md" ~/.codex/AGENTS.md
+link "$DOTFILES_DIR/codex/AGENTS.md" ~/.codex/AGENTS.md
 sync_agent_skills "codex" "$DOTFILES_DIR/codex/skills" "$HOME/.codex/skills"
 
 echo ""
