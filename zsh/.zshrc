@@ -14,6 +14,7 @@ export PATH="$HOMEBREW_PREFIX/share/google-cloud-sdk/bin:$PATH"
 export PATH="$HOME/go/bin:$PATH"
 export PATH="$HOME/.bun/bin:$PATH"
 export PATH="$HOMEBREW_PREFIX/opt/trash/bin:$PATH"
+export PATH="$HOMEBREW_PREFIX/opt/coreutils/libexec/gnubin:$PATH"
 
 # --- 2. Tool Initializations ---
 
