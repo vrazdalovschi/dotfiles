@@ -364,6 +364,9 @@ youtube lofi beats        # Opens browser with YouTube search
 **Data:**
 `jq`, `cue`
 
+**Misc:**
+`ralphex`
+
 ### Runtime Versions (mise)
 
 | Tool                                      | Description            |
