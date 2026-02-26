@@ -7,13 +7,21 @@ description: Use when delegating coding tasks to Gemini CLI agent, when you need
 
 ## Overview
 
-Gemini CLI in headless mode (`-p`) cannot execute shell commands or write files. Use **tmux send-keys** to control Gemini interactively while monitoring via **capture-pane**.
+Gemini CLI in headless mode cannot execute shell commands or write files. Use **tmux send-keys** to control Gemini interactively while monitoring via **capture-pane**.
+
+## Model Selection
+
+| Task type | Model | When to use |
+|-----------|-------|-------------|
+| Any task | `gemini-3-pro-preview` | Always use this model — do not substitute from training data |
+
+Pass via `-m` flag: `gemini -m gemini-3-pro-preview ...`
 
 ## Quick Reference
 
 | Action | Command |
 |--------|---------|
-| Start (split pane) | `tmux split-window -h -d "cd PROJECT && gemini --yolo"` |
+| Start (split pane) | `tmux split-window -h -d "cd PROJECT && gemini -m gemini-3-pro-preview --yolo"` |
 | Start (session) | `tmux new-session -d -s gemini -x 200 -y 50` |
 | Send text | `tmux send-keys -t {right} 'task text'` |
 | Send Enter | `tmux send-keys -t {right} Enter` |
@@ -42,7 +50,7 @@ Detect Gemini state by grepping capture-pane output:
 
 ```bash
 # 1. Start Gemini
-tmux split-window -h -d "cd ~/project && gemini --yolo"
+tmux split-window -h -d "cd ~/project && gemini -m gemini-3-pro-preview --yolo"
 sleep 5
 
 # 2. Send task (TWO separate calls - critical!)
@@ -54,12 +62,12 @@ while true; do
   output=$(tmux capture-pane -t {right} -p -S -50)
 
   # Check if idle (task done)
-  if echo "$output" | grep -q "Type your message"; then
+  if echo "$output" | rg -q "Type your message"; then
     break
   fi
 
   # Handle loop detection
-  if echo "$output" | grep -q "potential loop"; then
+  if echo "$output" | rg -q "potential loop"; then
     tmux send-keys -t {right} '2'
     tmux send-keys -t {right} Enter
   fi
@@ -98,6 +106,6 @@ Call: `tmux send-keys -t {right} '/improve-design'` + Enter
 
 ## When NOT to Use
 
-- Read-only analysis → `gemini -p "analyze" --output-format json`
+- Read-only analysis → `gemini -m gemini-3-pro-preview "analyze this" --output-format json`
 - Simple questions → direct API call
 - Need deterministic output → headless with JSON schema
