@@ -308,7 +308,7 @@ youtube lofi beats        # Opens browser with YouTube search
 
 | App                                | Description | Managed By |
 | ---------------------------------- | ----------- | ---------- |
-| [Insomnia](https://insomnia.rest/) | API client  | Homebrew   |
+| [Bruno](https://www.usebruno.com/) | API client  | Homebrew   |
 | [ngrok](https://ngrok.com/)        | Tunneling   | Homebrew   |
 
 ### Productivity & Utilities
