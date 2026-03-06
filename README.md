@@ -11,7 +11,7 @@ Personal configuration files for macOS development environment.
 | **mise**    | Runtime version manager config (node, python, go, terraform)                       |
 | **zed**     | Zed editor settings                                                                |
 | **agents**  | Shared skills used across Codex, Claude, and Gemini                                |
-| **claude**  | Claude Code settings, custom skills, statusline, and commands                      |
+| **claude**  | Claude Code settings, custom skills, hooks, statusline, and commands               |
 | **codex**   | Codex-specific skills                                                              |
 | **gemini**  | Gemini-specific skills                                                             |
 | **ghostty** | Terminal emulator configuration                                                    |
@@ -80,6 +80,7 @@ dotfiles/
 │   ├── CLAUDE.md        # Global instructions
 │   ├── settings.json    # Claude Code settings
 │   ├── statusline-command.sh
+│   ├── hooks/           # PreToolUse hooks (enforce_rg, rtk_rewrite)
 │   ├── skills/          # Custom skills
 │   └── commands/        # Custom commands
 ├── codex/
@@ -355,6 +356,7 @@ youtube lofi beats        # Opens browser with YouTube search
 | [Gemini CLI](https://github.com/anthropics/gemini-cli)        | Google's Gemini CLI        | bun        |
 | [Codex](https://github.com/openai/codex)                      | OpenAI's coding agent      | bun        |
 | [Shopify CLI](https://shopify.dev/docs/api/shopify-cli)       | Shopify development CLI    | bun        |
+| [RTK](https://github.com/contextvibes/rtk)                   | Token-saving shell proxy   | Homebrew   |
 
 ### CLI Tools (Homebrew)
 
@@ -372,6 +374,9 @@ youtube lofi beats        # Opens browser with YouTube search
 
 **Data:**
 `jq`, `cue`
+
+**AI Tool Optimization:**
+`rtk` (token-saving shell proxy for AI coding agents)
 
 **Misc:**
 `ralphex`

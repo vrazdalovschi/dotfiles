@@ -31,6 +31,10 @@
           {
             "type": "command",
             "command": "python3 ~/.claude/hooks/enforce_rg_over_grep.py"
+          },
+          {
+            "type": "command",
+            "command": "bash ~/.claude/hooks/rtk_rewrite.sh"
           }
         ]
       }
