@@ -14,7 +14,7 @@ Personal macOS development environment configuration managed via symlinks.
 
 5. **Check for duplicates before adding** - Before adding any package, tool, plugin, skill, alias, or config entry, check whether it already exists in the relevant file (Brewfile, mise config, .zshrc, settings, etc.). Never create duplicate entries.
 
-6. **Re-run install.sh after any skill changes** - Any time a skill is added, removed, renamed, or moved (shared or tool-specific), run `./install.sh` to refresh skill symlinks.
+6. **Re-run install.sh after any skill changes** - Any time a skill is added, removed, renamed, or moved (shared or tool-specific), run `./install.sh` to refresh skill symlinks. For toggling shared skills, use `mise run skill:enable|disable <name>` instead.
 
 7. **Use shared vs tool-specific skill locations correctly** - Put skills used by multiple tools in `agents/skills/shared/`. Put tool-only skills in `codex/skills/`, `claude/skills/`, or `gemini/skills/` as appropriate.
 
@@ -23,6 +23,9 @@ Personal macOS development environment configuration managed via symlinks.
 ```bash
 ./install.sh              # Create symlinks, install brew packages, mise tools
 brew bundle dump --file=brew/Brewfile --force  # Export current brew packages
+mise run skill:list       # Show all shared skills with enabled/disabled status
+mise run skill:disable <name>  # Disable a shared skill
+mise run skill:enable <name>   # Re-enable a disabled skill
 ```
 
 ## Structure
@@ -36,6 +39,8 @@ brew bundle dump --file=brew/Brewfile --force  # Export current brew packages
 | `ghostty/config` | Terminal config |
 | `zed/settings.json` | Editor settings |
 | `agents/skills/shared/` | Skills shared across Codex, Claude, and Gemini |
+| `agents/skills/disabled/` | Disabled shared skills (not synced) |
+| `.mise/tasks/skill/` | Enable/disable/list shared skills (mise tasks) |
 | `codex/skills/` | Codex-specific skills |
 | `claude/` | Claude Code skills and settings |
 | `gemini/` | Gemini CLI settings and skills |
@@ -63,3 +68,4 @@ All configs are symlinked from this repo to their system locations. After `insta
 2. **Tool-specific skill**: Add to `codex/skills/`, `claude/skills/`, or `gemini/skills/`
 3. **Check duplicates first**: Ensure no existing skill with the same name in the same target scope
 4. **Always run installer**: Run `./install.sh` after any skill add/remove/rename/move so symlinks are refreshed
+5. **Enable/disable shared skills**: `mise run skill:disable <name>` moves to `disabled/`, `mise run skill:enable <name>` moves back, `mise run skill:list` shows status

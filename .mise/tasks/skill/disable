@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+#MISE description="Disable a shared skill"
+#USAGE arg "<name>"
+set -e
+
+DOTFILES_DIR="$(cd "$(dirname "$0")/../../.." && pwd)"
+SHARED_DIR="$DOTFILES_DIR/agents/skills/shared"
+DISABLED_DIR="$DOTFILES_DIR/agents/skills/disabled"
+
+name="$1"
+
+if [ ! -e "$SHARED_DIR/$name" ] && [ ! -L "$SHARED_DIR/$name" ]; then
+    echo "Error: skill '$name' not found in shared/"
+    exit 1
+fi
+
+if [ -e "$DISABLED_DIR/$name" ] || [ -L "$DISABLED_DIR/$name" ]; then
+    echo "Error: skill '$name' is already disabled"
+    exit 1
+fi
+
+mv "$SHARED_DIR/$name" "$DISABLED_DIR/$name"
+echo "Disabled skill: $name"
+
+# Source sync functions from install.sh and re-sync all agents
+eval "$(sed -n '/^link()/,/^}/p; /^ensure_directory()/,/^}/p; /^sync_skill_source()/,/^}/p; /^list_skill_names()/,/^}/p; /^remove_stale_managed_symlinks()/,/^}/p; /^sync_agent_skills()/,/^}/p' "$DOTFILES_DIR/install.sh")"
+sync_agent_skills "claude" "$DOTFILES_DIR/claude/skills" "$HOME/.claude/skills"
+sync_agent_skills "codex" "$DOTFILES_DIR/codex/skills" "$HOME/.codex/skills"
+sync_agent_skills "gemini" "$DOTFILES_DIR/gemini/skills" "$HOME/.gemini/skills"

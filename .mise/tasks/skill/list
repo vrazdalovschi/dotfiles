@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+#MISE description="List shared skills with enabled/disabled status"
+set -e
+
+DOTFILES_DIR="$(cd "$(dirname "$0")/../../.." && pwd)"
+SHARED_DIR="$DOTFILES_DIR/agents/skills/shared"
+DISABLED_DIR="$DOTFILES_DIR/agents/skills/disabled"
+
+echo "Shared skills:"
+echo ""
+
+for skill_dir in "$SHARED_DIR"/*; do
+    [ -d "$skill_dir" ] || continue
+    name="$(basename "$skill_dir")"
+    echo "  enabled   $name"
+done
+
+if [ -d "$DISABLED_DIR" ]; then
+    for skill_dir in "$DISABLED_DIR"/*; do
+        [ -d "$skill_dir" ] || continue
+        name="$(basename "$skill_dir")"
+        echo "  disabled  $name"
+    done
+fi

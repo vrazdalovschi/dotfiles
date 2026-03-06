@@ -64,9 +64,12 @@ dotfiles/
 │   └── Brewfile         # Homebrew packages
 ├── bun/
 │   └── package.json     # Global bun packages
+├── .mise/
+│   └── tasks/skill/     # Enable/disable/list shared skills
 ├── agents/
 │   └── skills/
-│       └── shared/      # Shared skills for all agents
+│       ├── shared/      # Shared skills for all agents
+│       └── disabled/    # Disabled shared skills (not synced)
 ├── git/
 │   └── .gitconfig       # Git config (delta, zed editor)
 ├── mise/
@@ -133,6 +136,12 @@ Add a new skill:
 2. Agent-specific and versioned: add `<agent>/skills/<skill>/SKILL.md`
 3. Agent-specific and local only: add `$HOME/.agents/skills-local/<agent>/<skill>/SKILL.md`
 4. Run `./install.sh`
+
+Enable/disable shared skills:
+
+- `mise run skill:disable <name>` — move from `shared/` to `disabled/` and re-sync
+- `mise run skill:enable <name>` — move from `disabled/` to `shared/` and re-sync
+- `mise run skill:list` — show all shared skills with status
 
 ## Daily Workflow
 
