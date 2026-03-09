@@ -309,6 +309,7 @@ youtube lofi beats        # Opens browser with YouTube search
 
 | App                                                   | Description                                      | Managed By      |
 | ----------------------------------------------------- | ------------------------------------------------ | --------------- |
+| [AWS CLI](https://aws.amazon.com/cli/)                 | AWS CLI (aws)                                    | Homebrew        |
 | [Google Cloud SDK](https://cloud.google.com/sdk)      | GCP CLI (gcloud, gsutil, gke-gcloud-auth-plugin) | Homebrew        |
 | [Lens](https://k8slens.dev/)                          | Kubernetes IDE                                   | Homebrew        |
 | k3d, kustomize, stern, kubefwd                        | K8s CLI tools                                    | Homebrew        |
