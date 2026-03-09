@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "@google/gemini-cli": "latest",
+    "@googleworkspace/cli": "latest",
     "@openai/codex": "latest",
     "@shopify/cli": "latest"
   }
