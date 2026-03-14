@@ -1,2 +1,1 @@
 - Always use `rg` (ripgrep) instead of `grep` for searching file contents
-- When `rtk` is available, prefer `rtk <cmd>` over running commands directly (e.g., `rtk git status`, `rtk grep`, `rtk cat`). RTK compresses output to save context tokens.
