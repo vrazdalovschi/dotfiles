@@ -1,3 +1,6 @@
 [submodule "submodules/dev-browser"]
 	path = submodules/dev-browser
 	url = https://github.com/SawyerHood/dev-browser.git
+[submodule "submodules/superpowers"]
+	path = submodules/superpowers
+	url = https://github.com/obra/superpowers.git
