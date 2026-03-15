@@ -27,5 +27,9 @@
   "enabledPlugins": {
     "webflow-skills@webflow-skills": false
   },
-  "effortLevel": "high"
+  "effortLevel": "high",
+  "attribution": {
+    "commit": "",
+    "pr": ""
+  }
 }
