@@ -18,6 +18,7 @@ Personal configuration files for macOS development environment.
 | **brew**    | All Homebrew packages (Brewfile)                                                   |
 | **bun**     | Global bun packages (package.json)                                                 |
 | **ssh**     | SSH defaults (AddKeysToAgent, UseKeychain)                                         |
+| **orbstack**| Sandboxed dev environments via Docker (Claude, Codex, Gemini)                      |
 
 ## Quick Start
 
@@ -424,6 +425,41 @@ See [mise.jdx.dev](https://mise.jdx.dev) for docs.
 - Custom skills for PostgreSQL, SQLMesh, planning workflows
 - Statusline showing git/project info
 - Shared agent instructions in AGENTS.md (CLAUDE.md symlink)
+
+## Sandbox (OrbStack Dev Environments)
+
+Isolated Docker containers for running AI coding agents with full permissions safely.
+Each project gets its own container with only the project folder mounted.
+
+```bash
+cd my-project
+sandbox            # create/start container + enter
+sandbox -d         # same, but with Docker socket (host-level access)
+sandbox stop       # remove the container
+sandbox rebuild    # rebuild image + recreate container
+sandbox list       # show all sandbox containers
+```
+
+**What's inside:** Claude Code, Codex, Gemini CLI, uv, mise, git.
+
+**What's mounted:**
+
+| Mount | Access | Purpose |
+|---|---|---|
+| `$(pwd)` → `/workspace` | read-write | Project files (only this folder) |
+| `~/.claude` | read-write | Subscription auth |
+| `~/.codex` | read-write | Subscription auth |
+| `~/.gemini` | read-write | Subscription auth |
+| `~/.gitconfig` | read-only | Git identity |
+| Docker socket | opt-in (`-d`) | Docker-in-docker |
+
+**What's NOT mounted (by design):**
+
+- **SSH keys** — not mounted to prevent agents from pushing code or accessing remote servers. If needed for private repo cloning, reconsider and mount `~/.ssh:ro`.
+- **Home directory** — only the project folder is accessible, not `~/`.
+- **Docker socket** (by default) — grants host-level access, only enabled with `-d` flag.
+
+**Networking:** uses `--network host` so any port the app listens on is available at `localhost` on your Mac.
 
 ## Reference Docs
 

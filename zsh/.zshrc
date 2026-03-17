@@ -110,6 +110,13 @@ alias lg="lazygit"
 alias kdiff='kubectl diff -f - | delta --paging=never'
 alias kapply='kubectl apply -f -'
 
+# Sandbox (OrbStack dev environment)
+sandbox() {
+  local dotfiles
+  dotfiles="$(dirname "$(dirname "$(readlink -f "$HOME/.zshrc")")")"
+  "$dotfiles/orbstack/sandbox.sh" "$@"
+}
+
 # --- 5. Startup Checks ---
 
 # Check for bun global package updates (once per day)
@@ -164,3 +171,5 @@ youtube() {
 
 # Syntax Highlighting (green=valid, red=invalid commands)
 [[ -f "$HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]] && source "$HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+
+export PATH="$HOME/.local/bin:$PATH"
