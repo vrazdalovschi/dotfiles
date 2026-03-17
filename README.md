@@ -312,6 +312,7 @@ youtube lofi beats        # Opens browser with YouTube search
 | [AWS CLI](https://aws.amazon.com/cli/)                 | AWS CLI (aws)                                    | Homebrew        |
 | [Google Cloud SDK](https://cloud.google.com/sdk)      | GCP CLI (gcloud, gsutil, gke-gcloud-auth-plugin) | Homebrew        |
 | [Lens](https://k8slens.dev/)                          | Kubernetes IDE                                   | Homebrew        |
+| [OrbStack](https://orbstack.dev/)                     | Fast Docker & Linux on macOS                     | Homebrew        |
 | k3d, kustomize, stern, kubefwd                        | K8s CLI tools                                    | Homebrew        |
 | [Terraform](https://terraform.io/), tflint, terramate | Infrastructure as code                           | mise / Homebrew |
 
