@@ -37,6 +37,9 @@ RUN --mount=type=secret,id=github_token \
     GITHUB_TOKEN=$(cat /run/secrets/github_token 2>/dev/null || true) \
     mise install -y && mise reshim
 
+# --- Claude Code (native installer) ---
+RUN curl -fsSL https://claude.ai/install.sh | bash
+
 # --- Zsh plugins ---
 RUN git clone --depth=1 https://github.com/zsh-users/zsh-autosuggestions /usr/share/zsh-autosuggestions \
     && git clone --depth=1 https://github.com/zsh-users/zsh-syntax-highlighting /usr/share/zsh-syntax-highlighting \

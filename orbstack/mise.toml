@@ -7,8 +7,7 @@ bun = "latest"
 pnpm = "latest"
 uv = "latest"
 
-# AI coding assistants
-"npm:@anthropic-ai/claude-code" = "latest"
+# AI coding assistants (claude installed natively in Dockerfile)
 "npm:@openai/codex" = "latest"
 "npm:@google/gemini-cli" = "latest"
 
