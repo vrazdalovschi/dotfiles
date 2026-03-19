@@ -132,6 +132,7 @@ sync_agent_skills() {
     local shared_root="$DOTFILES_DIR/agents/skills/shared"
     local local_root="$HOME/.agents/skills-local/$agent"
     local codex_system_root="$DOTFILES_DIR/codex/skills/.system"
+    local gstack_root="$DOTFILES_DIR/submodules/gstack"
     local desired_names=""
 
     ensure_directory "$dest_root"
@@ -142,21 +143,23 @@ sync_agent_skills() {
                 list_skill_names "$shared_root"
                 list_skill_names "$repo_agent_root"
                 list_skill_names "$codex_system_root"
+                list_skill_names "$gstack_root"
                 list_skill_names "$local_root"
             } | sort -u
         )"
         remove_stale_managed_symlinks "$dest_root" "$desired_names" \
-            "$shared_root" "$repo_agent_root" "$codex_system_root" "$local_root"
+            "$shared_root" "$repo_agent_root" "$codex_system_root" "$gstack_root" "$local_root"
     else
         desired_names="$(
             {
                 list_skill_names "$shared_root"
                 list_skill_names "$repo_agent_root"
+                list_skill_names "$gstack_root"
                 list_skill_names "$local_root"
             } | sort -u
         )"
         remove_stale_managed_symlinks "$dest_root" "$desired_names" \
-            "$shared_root" "$repo_agent_root" "$local_root"
+            "$shared_root" "$repo_agent_root" "$gstack_root" "$local_root"
     fi
 
     sync_skill_source "$shared_root" "$dest_root" "shared"
@@ -164,6 +167,7 @@ sync_agent_skills() {
     if [ "$agent" = "codex" ]; then
         sync_skill_source "$codex_system_root" "$dest_root" "codex-system"
     fi
+    sync_skill_source "$gstack_root" "$dest_root" "gstack"
     sync_skill_source "$local_root" "$dest_root" "local-$agent"
 }
 
