@@ -113,6 +113,11 @@ ssh() { TERM=xterm-256color command ssh "$@" }
 alias kdiff='kubectl diff -f - | delta --paging=never'
 alias kapply='kubectl apply -f -'
 
+# AI agents (yolo mode)
+claude-yolo() { claude --dangerously-skip-permissions "$@" }
+codex-yolo() { codex --approval-mode full-auto "$@" }
+gemini-yolo() { gemini --yolo "$@" }
+
 # Sandbox (OrbStack dev environment)
 sandbox() {
   local dotfiles
