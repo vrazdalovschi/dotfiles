@@ -54,6 +54,11 @@ start() {
         [ -d "$HOME/.gemini" ] && mounts+=(-v "$HOME/.gemini:/root/.gemini")
         [ -f "$HOME/.gitconfig" ] && mounts+=(-v "$HOME/.gitconfig:/root/.gitconfig:ro")
 
+        # Mount dotfiles repo so symlinked skills/commands resolve inside container
+        local dotfiles_dir
+        dotfiles_dir="$(dirname "$SCRIPT_DIR")"
+        mounts+=(-v "$dotfiles_dir:$dotfiles_dir:ro")
+
         echo "Creating sandbox for $DIR_NAME..."
         docker run -d \
             --name "$CONTAINER_NAME" \
