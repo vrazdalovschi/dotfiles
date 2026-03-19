@@ -75,6 +75,13 @@ stop() {
     echo "Stopped $CONTAINER_NAME"
 }
 
+remove() {
+    local target="${1:-$CONTAINER_NAME}"
+    [[ "$target" != sandbox-* ]] && target="sandbox-$target"
+    docker rm -f "$target" >/dev/null 2>&1
+    echo "Removed $target"
+}
+
 list() {
     docker ps -a --filter "name=sandbox-" --format "table {{.Names}}\t{{.Status}}\t{{.RunningFor}}"
 }
@@ -85,12 +92,7 @@ case "${1:-}" in
     enter)   enter ;;
     stop)    stop ;;
     list)    list ;;
-    remove)
-        local target="${2:-$CONTAINER_NAME}"
-        [[ "$target" != sandbox-* ]] && target="sandbox-$target"
-        docker rm -f "$target" >/dev/null 2>&1
-        echo "Removed $target"
-        ;;
+    remove)  remove "${2:-}" ;;
     rebuild) stop 2>/dev/null || true; build; start; enter ;;
     -d)      start -d; enter ;;
     "")      start; enter ;;
