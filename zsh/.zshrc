@@ -106,6 +106,9 @@ alias gc="git commit"
 alias gp="git push"
 alias lg="lazygit"
 
+# SSH (fix xterm-ghostty on remote servers)
+ssh() { TERM=xterm-256color command ssh "$@" }
+
 # Kubernetes
 alias kdiff='kubectl diff -f - | delta --paging=never'
 alias kapply='kubectl apply -f -'
