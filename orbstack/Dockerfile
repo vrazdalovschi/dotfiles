@@ -2,33 +2,47 @@ FROM ubuntu:24.04
 
 ENV DEBIAN_FRONTEND=noninteractive
 
+# --- System packages ---
 RUN apt-get update && apt-get install -y \
-    curl git build-essential ca-certificates gnupg sudo \
+    zsh git curl wget build-essential ca-certificates gnupg sudo \
+    tree dos2unix jq btop watch unzip tealdeer \
     && rm -rf /var/lib/apt/lists/*
 
-# Node.js 22
-RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash - \
-    && apt-get install -y nodejs \
+# --- Google Cloud CLI ---
+RUN curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg \
+        | gpg --dearmor -o /usr/share/keyrings/cloud.google.gpg \
+    && echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" \
+        | tee /etc/apt/sources.list.d/google-cloud-sdk.list > /dev/null \
+    && apt-get update && apt-get install -y google-cloud-cli \
     && rm -rf /var/lib/apt/lists/*
 
-# AI coding assistants
-RUN npm install -g @anthropic-ai/claude-code @openai/codex @google/gemini-cli
-
-# uv (Python package manager)
-RUN curl -LsSf https://astral.sh/uv/install.sh | sh
-
-# mise (runtime manager)
-RUN curl https://mise.run | sh
-
-ENV PATH="/root/.local/share/mise/bin:/root/.local/bin:${PATH}"
-
-# Docker CLI (for docker-in-docker via socket mount)
+# --- Docker CLI (for docker-in-docker via socket mount) ---
 RUN install -m 0755 -d /etc/apt/keyrings \
     && curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc \
     && chmod a+r /etc/apt/keyrings/docker.asc \
-    && echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null \
-    && apt-get update \
-    && apt-get install -y docker-ce-cli \
+    && echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu $(. /etc/os-release && echo "$VERSION_CODENAME") stable" \
+        | tee /etc/apt/sources.list.d/docker.list > /dev/null \
+    && apt-get update && apt-get install -y docker-ce-cli \
     && rm -rf /var/lib/apt/lists/*
+
+# --- mise (runtime/tool manager) ---
+RUN curl https://mise.run | sh
+ENV PATH="/root/.local/share/mise/shims:/root/.local/share/mise/bin:/root/.local/bin:${PATH}"
+ENV IS_SANDBOX=1
+
+# All dev runtimes and CLI tools via mise
+COPY mise.toml /root/.config/mise/config.toml
+RUN --mount=type=secret,id=github_token \
+    GITHUB_TOKEN=$(cat /run/secrets/github_token 2>/dev/null || true) \
+    mise install -y && mise reshim
+
+# --- Zsh plugins ---
+RUN git clone --depth=1 https://github.com/zsh-users/zsh-autosuggestions /usr/share/zsh-autosuggestions \
+    && git clone --depth=1 https://github.com/zsh-users/zsh-syntax-highlighting /usr/share/zsh-syntax-highlighting \
+    && git clone --depth=1 https://github.com/MichaelAquilina/zsh-you-should-use /usr/share/zsh-you-should-use
+
+# --- Shell config ---
+COPY sandbox.zshrc /root/.zshrc
+RUN chsh -s /bin/zsh
 
 WORKDIR /workspace

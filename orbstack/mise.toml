@@ -1,0 +1,49 @@
+[tools]
+# Dev runtimes
+node = "22"
+python = "3.11"
+go = "latest"
+bun = "latest"
+pnpm = "latest"
+uv = "latest"
+
+# AI coding assistants
+"npm:@anthropic-ai/claude-code" = "latest"
+"npm:@openai/codex" = "latest"
+"npm:@google/gemini-cli" = "latest"
+
+# API & workflow
+"npm:@usebruno/cli" = "latest"
+"npm:@withgraphite/graphite-cli" = "latest"
+
+# Shell & prompt
+starship = "latest"
+zoxide = "latest"
+direnv = "latest"
+fzf = "latest"
+
+# File & search
+bat = "latest"
+eza = "latest"
+fd = "latest"
+ripgrep = "latest"
+
+# Git
+delta = "latest"
+lazygit = "latest"
+github-cli = "latest"
+
+# Code quality
+shellcheck = "latest"
+hadolint = "latest"
+task = "latest"
+
+# Kubernetes
+kubectl = "latest"
+kustomize = "latest"
+helm = "latest"
+k9s = "latest"
+stern = "latest"
+
+# Infrastructure
+cue = "latest"

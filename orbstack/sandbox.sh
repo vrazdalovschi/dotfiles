@@ -13,7 +13,15 @@ usage() {
 
 build() {
     echo "Building sandbox image..."
-    docker build -t "$IMAGE_NAME" "$SCRIPT_DIR"
+    local github_token="${GITHUB_TOKEN:-$(gh auth token 2>/dev/null || true)}"
+    if [ -n "$github_token" ]; then
+        GITHUB_TOKEN="$github_token" docker build \
+            --secret id=github_token,env=GITHUB_TOKEN \
+            -t "$IMAGE_NAME" "$SCRIPT_DIR"
+    else
+        echo "⚠ No GitHub token found — build may hit rate limits"
+        docker build -t "$IMAGE_NAME" "$SCRIPT_DIR"
+    fi
 }
 
 start() {
@@ -59,7 +67,7 @@ start() {
 }
 
 enter() {
-    docker exec -it "$CONTAINER_NAME" bash
+    docker exec -it "$CONTAINER_NAME" zsh
 }
 
 stop() {
