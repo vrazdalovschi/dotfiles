@@ -7,11 +7,11 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
-  "git_panel": {
-    "tree_view": true,
+  "edit_predictions": {
+    "provider": "zed"
   },
-  "features": {
-    "edit_prediction_provider": "zed",
+  "git_panel": {
+    "tree_view": false
   },
   "base_keymap": "JetBrains",
   "ui_font_size": 16,
@@ -28,12 +28,13 @@
     },
   },
   "agent_servers": {
-    "claude": {
-      "ignore_system_version": false,
+    "claude-acp": {
+      "type": "registry"
     },
-    "gemini": {
-      "ignore_system_version": false,
-    },
+    "gemini-custom": {
+      "type": "custom",
+      "command": "gemini"
+    }
   },
   "theme": {
     "mode": "system",
