@@ -1,5 +1,8 @@
-# --- 1. Path Setup ---
+# --- 1. Path & Terminal Setup ---
 export PATH="$HOME/.local/share/mise/shims:$HOME/.local/share/mise/bin:$HOME/.local/bin:$PATH"
+export TERM=xterm-256color
+export LANG=C.UTF-8
+export LC_ALL=C.UTF-8
 
 # --- 2. Tool Initializations ---
 

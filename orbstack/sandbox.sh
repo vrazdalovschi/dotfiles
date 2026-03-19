@@ -7,7 +7,7 @@ DIR_NAME="$(basename "$(pwd)")"
 CONTAINER_NAME="sandbox-$(echo "$DIR_NAME" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9-]/-/g')"
 
 usage() {
-    echo "Usage: sandbox [init|start|enter|stop|rebuild|list]"
+    echo "Usage: sandbox [init|start|enter|stop|rebuild|list|remove <name>]"
     echo "       sandbox -d    (with Docker socket access)"
 }
 
@@ -85,6 +85,12 @@ case "${1:-}" in
     enter)   enter ;;
     stop)    stop ;;
     list)    list ;;
+    remove)
+        local target="${2:-$CONTAINER_NAME}"
+        [[ "$target" != sandbox-* ]] && target="sandbox-$target"
+        docker rm -f "$target" >/dev/null 2>&1
+        echo "Removed $target"
+        ;;
     rebuild) stop 2>/dev/null || true; build; start; enter ;;
     -d)      start -d; enter ;;
     "")      start; enter ;;

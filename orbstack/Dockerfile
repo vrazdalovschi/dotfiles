@@ -5,7 +5,8 @@ ENV DEBIAN_FRONTEND=noninteractive
 # --- System packages ---
 RUN apt-get update && apt-get install -y \
     zsh git curl wget build-essential ca-certificates gnupg sudo \
-    tree dos2unix jq btop watch unzip tealdeer \
+    tree dos2unix jq btop watch unzip tealdeer locales \
+    && sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen && locale-gen \
     && rm -rf /var/lib/apt/lists/*
 
 # --- Google Cloud CLI ---
