@@ -279,7 +279,7 @@ lg                        # Opens lazygit (aliased)
 | `find` | `fd`                    | Fast file finder               |
 | `rm`   | `trash`                 | Safe delete to Trash           |
 | `top`  | `btop`                  | Beautiful system monitor       |
-| `help` | `tldr`                  | Simplified man pages           |
+| `help` | `tealdeer`              | Simplified man pages           |
 | `lg`   | `lazygit`               | Git TUI                        |
 | `z`    | `zoxide`                | Smart directory jump           |
 
@@ -363,7 +363,7 @@ youtube lofi beats        # Opens browser with YouTube search
 ### CLI Tools (Homebrew)
 
 **Modern Replacements:**
-`bat` (cat), `eza` (ls), `fd` (find), `ripgrep` (grep), `zoxide` (cd), `trash` (rm), `btop` (top), `tldr` (man)
+`bat` (cat), `eza` (ls), `fd` (find), `ripgrep` (grep), `zoxide` (cd), `trash` (rm), `btop` (top), `tealdeer` (man)
 
 **Git & Dev:**
 `git`, `git-delta`, `git-lfs`, `gh`, `lazygit`, `graphite`
