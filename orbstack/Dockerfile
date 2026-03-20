@@ -37,6 +37,14 @@ RUN --mount=type=secret,id=github_token \
     GITHUB_TOKEN=$(cat /run/secrets/github_token 2>/dev/null || true) \
     mise install -y && mise reshim
 
+# --- Pants (build system) ---
+RUN curl --proto '=https' --tlsv1.2 -fsSL https://static.pantsbuild.org/setup/get-pants.sh | bash
+
+# --- Lefthook (git hooks manager) ---
+RUN curl -1sLf 'https://dl.cloudsmith.io/public/evilmartians/lefthook/setup.deb.sh' | bash \
+    && apt-get update && apt-get install -y lefthook \
+    && rm -rf /var/lib/apt/lists/*
+
 # --- Claude Code (native installer) ---
 RUN curl -fsSL https://claude.ai/install.sh | bash
 

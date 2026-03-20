@@ -8,7 +8,6 @@ CONTAINER_NAME="sandbox-$(echo "$DIR_NAME" | tr '[:upper:]' '[:lower:]' | sed 's
 
 usage() {
     echo "Usage: sandbox [init|start|enter|stop|rebuild|list|remove <name>]"
-    echo "       sandbox -d    (with Docker socket access)"
 }
 
 build() {
@@ -25,11 +24,6 @@ build() {
 }
 
 start() {
-    local docker_socket=false
-    if [ "${1:-}" = "-d" ]; then
-        docker_socket=true
-    fi
-
     if ! docker image inspect "$IMAGE_NAME" &>/dev/null; then
         build
     fi
@@ -42,12 +36,8 @@ start() {
     else
         local mounts=(
             -v "$(pwd):/workspace"
+            -v /var/run/docker.sock:/var/run/docker.sock
         )
-
-        if [ "$docker_socket" = true ]; then
-            mounts+=(-v /var/run/docker.sock:/var/run/docker.sock)
-            echo "⚠ Docker socket mounted — container has host-level access"
-        fi
 
         [ -d "$HOME/.claude" ] && mounts+=(-v "$HOME/.claude:/root/.claude")
         [ -d "$HOME/.codex" ] && mounts+=(-v "$HOME/.codex:/root/.codex")
@@ -76,7 +66,7 @@ enter() {
 }
 
 stop() {
-    docker rm -f "$CONTAINER_NAME" >/dev/null 2>&1
+    docker stop "$CONTAINER_NAME" >/dev/null 2>&1
     echo "Stopped $CONTAINER_NAME"
 }
 
@@ -99,7 +89,6 @@ case "${1:-}" in
     list)    list ;;
     remove)  remove "${2:-}" ;;
     rebuild) stop 2>/dev/null || true; build; start; enter ;;
-    -d)      start -d; enter ;;
     "")      start; enter ;;
     *)       usage; exit 1 ;;
 esac

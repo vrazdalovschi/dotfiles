@@ -434,13 +434,13 @@ Each project gets its own container with only the project folder mounted.
 ```bash
 cd my-project
 sandbox            # create/start container + enter
-sandbox -d         # same, but with Docker socket (host-level access)
-sandbox stop       # remove the container
+sandbox stop       # stop container (state preserved)
 sandbox rebuild    # rebuild image + recreate container
 sandbox list       # show all sandbox containers
+sandbox remove     # destroy container completely
 ```
 
-**What's inside:** Claude Code, Codex, Gemini CLI, uv, mise, git.
+**What's inside:** Claude Code, Codex, Gemini CLI, Pants, Lefthook, uv, mise, git.
 
 **What's mounted:**
 
@@ -451,13 +451,12 @@ sandbox list       # show all sandbox containers
 | `~/.codex` | read-write | Subscription auth |
 | `~/.gemini` | read-write | Subscription auth |
 | `~/.gitconfig` | read-only | Git identity |
-| Docker socket | opt-in (`-d`) | Docker-in-docker |
+| Docker socket | read-write | Docker-in-docker |
 
 **What's NOT mounted (by design):**
 
 - **SSH keys** — not mounted to prevent agents from pushing code or accessing remote servers. If needed for private repo cloning, reconsider and mount `~/.ssh:ro`.
 - **Home directory** — only the project folder is accessible, not `~/`.
-- **Docker socket** (by default) — grants host-level access, only enabled with `-d` flag.
 
 **Networking:** uses `--network host` so any port the app listens on is available at `localhost` on your Mac.
 
