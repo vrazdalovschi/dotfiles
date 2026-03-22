@@ -64,7 +64,7 @@ alias lg="lazygit"
 
 # AI agents (yolo mode — sandbox only)
 alias claude="claude --dangerously-skip-permissions"
-alias codex="codex --approval-mode full-auto"
+alias codex="codex --dangerously-bypass-approvals-and-sandbox"
 alias gemini="gemini --yolo"
 
 # Kubernetes

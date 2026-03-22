@@ -88,7 +88,7 @@ case "${1:-}" in
     stop)    stop ;;
     list)    list ;;
     remove)  remove "${2:-}" ;;
-    rebuild) stop 2>/dev/null || true; build; start; enter ;;
+    rebuild) remove 2>/dev/null || true; build; start; enter ;;
     "")      start; enter ;;
     *)       usage; exit 1 ;;
 esac

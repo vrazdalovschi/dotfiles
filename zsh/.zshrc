@@ -115,7 +115,7 @@ alias kapply='kubectl apply -f -'
 
 # AI agents (yolo mode)
 claude-yolo() { claude --dangerously-skip-permissions "$@" }
-codex-yolo() { codex --approval-mode full-auto "$@" }
+codex-yolo() { codex --dangerously-bypass-approvals-and-sandbox "$@" }
 gemini-yolo() { gemini --yolo "$@" }
 
 # Sandbox (OrbStack dev environment)
