@@ -69,3 +69,9 @@ All configs are symlinked from this repo to their system locations. After `insta
 3. **Check duplicates first**: Ensure no existing skill with the same name in the same target scope
 4. **Always run installer**: Run `./install.sh` after any skill add/remove/rename/move so symlinks are refreshed
 5. **Enable/disable shared skills**: `mise run skill:disable <name>` moves to `disabled/`, `mise run skill:enable <name>` moves back, `mise run skill:list` shows status
+
+## Glossary
+
+| Term | Meaning |
+|------|---------|
+| **sandbox** | Docker container (Ubuntu 24.04) managed via `orbstack/sandbox.sh`. Provides an isolated Linux dev environment with all AI agents running in yolo/auto mode. Config: `orbstack/Dockerfile`, `orbstack/sandbox.zshrc`. Mounts `~/.claude`, `~/.codex`, `~/.gemini`, the current project as `/workspace`, and the dotfiles repo (read-only for skill symlinks). `IS_SANDBOX=1` env var is set inside. |
